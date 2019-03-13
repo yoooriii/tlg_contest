@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Chart View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ChartViewController" customModule="TelegramChart" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BFE-Jg-5j9" customClass="ScaleSliderView" customModule="TelegramChart" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="252" width="375" height="88"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sXx-8d-soY" customClass="SliderBackgroundView" customModule="TelegramChart" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="88"/>
+                                        <color key="backgroundColor" red="1" green="0.38151723780000002" blue="0.41902859930000003" alpha="1" colorSpace="calibratedRGB"/>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gKF-Ec-AgJ" userLabel="Center View">
+                                        <rect key="frame" x="88" y="0.0" width="143" height="88"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.56530589788732399" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <gestureRecognizers/>
+                                        <connections>
+                                            <outletCollection property="gestureRecognizers" destination="QFB-cA-40X" appends="YES" id="vPD-3w-mPF"/>
+                                        </connections>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fcG-nG-zxE" userLabel="Left View">
+                                        <rect key="frame" x="88" y="0.0" width="44" height="88"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.56530589789999997" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <gestureRecognizers/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="44" id="9MS-DB-XYW"/>
+                                        </constraints>
+                                        <connections>
+                                            <outletCollection property="gestureRecognizers" destination="kZo-14-LG4" appends="YES" id="3un-YB-TTt"/>
+                                        </connections>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wgD-Es-509" userLabel="Right View">
+                                        <rect key="frame" x="187" y="0.0" width="44" height="88"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.56530589789999997" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <gestureRecognizers/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="44" id="js5-AA-Y8d"/>
+                                        </constraints>
+                                        <connections>
+                                            <outletCollection property="gestureRecognizers" destination="Qer-z7-6Te" appends="YES" id="Ytx-Qq-5Io"/>
+                                        </connections>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="fcG-nG-zxE" firstAttribute="top" secondItem="BFE-Jg-5j9" secondAttribute="top" id="1aV-ei-hz6"/>
+                                    <constraint firstItem="sXx-8d-soY" firstAttribute="top" secondItem="BFE-Jg-5j9" secondAttribute="top" id="2Yw-fk-2Yb"/>
+                                    <constraint firstItem="gKF-Ec-AgJ" firstAttribute="top" secondItem="BFE-Jg-5j9" secondAttribute="top" id="FtE-mu-xp0"/>
+                                    <constraint firstAttribute="bottom" secondItem="fcG-nG-zxE" secondAttribute="bottom" id="Ghz-Rn-L1C"/>
+                                    <constraint firstItem="gKF-Ec-AgJ" firstAttribute="trailing" secondItem="wgD-Es-509" secondAttribute="trailing" id="KOv-Zh-g9l"/>
+                                    <constraint firstAttribute="bottom" secondItem="sXx-8d-soY" secondAttribute="bottom" id="KSj-jl-Viw"/>
+                                    <constraint firstAttribute="trailing" secondItem="wgD-Es-509" secondAttribute="trailing" constant="144" id="OpC-ge-Nyf"/>
+                                    <constraint firstItem="fcG-nG-zxE" firstAttribute="leading" secondItem="BFE-Jg-5j9" secondAttribute="leading" constant="88" id="Rjw-c2-Nbv"/>
+                                    <constraint firstAttribute="trailing" secondItem="sXx-8d-soY" secondAttribute="trailing" id="aNX-lf-SwY"/>
+                                    <constraint firstItem="wgD-Es-509" firstAttribute="top" secondItem="BFE-Jg-5j9" secondAttribute="top" id="cr1-Ri-PmG"/>
+                                    <constraint firstAttribute="bottom" secondItem="wgD-Es-509" secondAttribute="bottom" id="dBo-Yt-fGJ"/>
+                                    <constraint firstAttribute="bottom" secondItem="gKF-Ec-AgJ" secondAttribute="bottom" id="dWO-Qw-kuZ"/>
+                                    <constraint firstItem="sXx-8d-soY" firstAttribute="leading" secondItem="BFE-Jg-5j9" secondAttribute="leading" id="mbu-4T-b7O"/>
+                                    <constraint firstAttribute="height" constant="88" id="w5O-yg-LTg"/>
+                                    <constraint firstItem="gKF-Ec-AgJ" firstAttribute="leading" secondItem="fcG-nG-zxE" secondAttribute="leading" id="ziL-qM-vR5"/>
+                                </constraints>
+                                <connections>
+                                    <outlet property="backgroundView" destination="sXx-8d-soY" id="v3X-ri-DxT"/>
+                                    <outlet property="constraintLeft" destination="Rjw-c2-Nbv" id="nWH-qN-QJV"/>
+                                    <outlet property="constraintRight" destination="OpC-ge-Nyf" id="Ei2-5j-ANV"/>
+                                    <outlet property="sliderCenter" destination="gKF-Ec-AgJ" id="z6U-Vh-C0y"/>
+                                    <outlet property="sliderLeft" destination="fcG-nG-zxE" id="4yv-2u-kx6"/>
+                                    <outlet property="sliderRight" destination="wgD-Es-509" id="HjJ-js-gGt"/>
+                                </connections>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="BFE-Jg-5j9" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="VAu-yZ-Kal"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="BFE-Jg-5j9" secondAttribute="bottom" constant="327" id="fLG-S4-2uk"/>
+                            <constraint firstItem="BFE-Jg-5j9" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="h2z-eY-3LP"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+                <panGestureRecognizer minimumNumberOfTouches="1" id="kZo-14-LG4" userLabel="Left Slide Gesture">
+                    <connections>
+                        <action selector="onLeftSlide:" destination="BFE-Jg-5j9" id="B96-Xk-3ws"/>
+                    </connections>
+                </panGestureRecognizer>
+                <panGestureRecognizer minimumNumberOfTouches="1" id="Qer-z7-6Te" userLabel="Right Slide Gesture">
+                    <connections>
+                        <action selector="onRightSlide:" destination="BFE-Jg-5j9" id="NbP-25-tLm"/>
+                    </connections>
+                </panGestureRecognizer>
+                <panGestureRecognizer minimumNumberOfTouches="1" id="QFB-cA-40X" userLabel="Center Slide Gesture">
+                    <connections>
+                        <action selector="onCenterSlide:" destination="BFE-Jg-5j9" id="Oma-Gw-aBJ"/>
+                    </connections>
+                </panGestureRecognizer>
+            </objects>
+            <point key="canvasLocation" x="140" y="132.68365817091455"/>
+        </scene>
+    </scenes>
+</document>

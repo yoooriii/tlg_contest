@@ -11,16 +11,25 @@ import Foundation
 struct RawColumn: Decodable {
     let id: String!
     let values: [Int64]!
+    let minValue: Int64?
+    let maxValue: Int64?
     
     init(from decoder: Decoder) throws {
         var elements = try decoder.unkeyedContainer()
         id = try elements.decode(String.self)
+        var minVal = Int64.max
+        var maxVal = Int64.min
         var numbers = [Int64]()
         while !elements.isAtEnd {
             let num = try elements.decode(Int64.self)
             numbers.append(num)
+
+            if minVal > num { minVal = num }
+            if maxVal < num { maxVal = num }
         }
         values = numbers
+        minValue = minVal
+        maxValue = maxVal
     }
 }
 

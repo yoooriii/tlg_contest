@@ -9,38 +9,38 @@
 import Foundation
 
 protocol Vector {
-    associatedtype T
     var id: String! {get set}
-    var values: [T]! {get set}
+    var values: [Int64]! {get set}
+    var minValue: Int64? {get set}
+    var maxValue: Int64? {get set}
+
     init(_ rawColumn:RawColumn)
 }
 
-// type 'x'
-struct VectorTime: Vector {
-    typealias T = Int64
+class BasicVector: Vector {
     var id: String!
-    var values: [T]!
+    var values: [Int64]!
+    var minValue: Int64?
+    var maxValue: Int64?
 
-    init(_ rawColumn:RawColumn) {
-        values = rawColumn.values as [Int64]
+    required init(_ rawColumn:RawColumn) {
         id = rawColumn.id
+        values = rawColumn.values
+        minValue = rawColumn.minValue
+        maxValue = rawColumn.maxValue
     }
 }
 
+// type 'x'
+class VectorTime: BasicVector {
+}
+
 // type 'line'
-struct VectorAmplitude: Vector {
-    typealias T = TimeInterval
-    var id: String!
-    var values: [T]!
+class VectorAmplitude: BasicVector {
     var name: String!
     var colorString: String!
 
-    init(_ rawColumn:RawColumn) {
-        values = rawColumn.values.map({ TimeInterval($0) })
-        id = rawColumn.id
-    }
-
-    init(_ rawColumn:RawColumn, colorString: String!, name: String!) {
+    convenience init(_ rawColumn:RawColumn, colorString: String!, name: String!) {
         self.init(rawColumn)
         self.colorString = colorString
         self.name = name
