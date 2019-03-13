@@ -14,6 +14,7 @@
 		B38687D42239292E00E51BE1 /* chart_data.json in Resources */ = {isa = PBXBuildFile; fileRef = B38687D32239292E00E51BE1 /* chart_data.json */; };
 		B38687D9223969D500E51BE1 /* Extentions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B38687D8223969D500E51BE1 /* Extentions.swift */; };
 		B38687DB223969F700E51BE1 /* UIColor+z42.swift in Sources */ = {isa = PBXBuildFile; fileRef = B38687DA223969F700E51BE1 /* UIColor+z42.swift */; };
+		E29F9A2E223986260039C1D7 /* ChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29F9A2D223986260039C1D7 /* ChartView.swift */; };
 		E2D2C97222384C2500BAAB97 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E2D2C97122384C2500BAAB97 /* Assets.xcassets */; };
 		E2D2C97F22384C9700BAAB97 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D2C97D22384C9600BAAB97 /* AppDelegate.swift */; };
 		E2D2C98422384D0A00BAAB97 /* ChartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D2C98222384D0A00BAAB97 /* ChartViewController.swift */; };
@@ -29,6 +30,7 @@
 		B38687D32239292E00E51BE1 /* chart_data.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = chart_data.json; sourceTree = "<group>"; };
 		B38687D8223969D500E51BE1 /* Extentions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extentions.swift; sourceTree = "<group>"; };
 		B38687DA223969F700E51BE1 /* UIColor+z42.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+z42.swift"; sourceTree = "<group>"; };
+		E29F9A2D223986260039C1D7 /* ChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartView.swift; sourceTree = "<group>"; };
 		E2D2C96722384C2300BAAB97 /* TelegramChart.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TelegramChart.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E2D2C97122384C2500BAAB97 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E2D2C97622384C2500BAAB97 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -137,6 +139,7 @@
 			children = (
 				E2D2C98522384D6800BAAB97 /* ScaleSliderView.swift */,
 				E2D2C9872238590300BAAB97 /* SliderBackgroundView.swift */,
+				E29F9A2D223986260039C1D7 /* ChartView.swift */,
 			);
 			path = views;
 			sourceTree = "<group>";
@@ -218,6 +221,7 @@
 				E2D2C98422384D0A00BAAB97 /* ChartViewController.swift in Sources */,
 				B38687C82239243D00E51BE1 /* Models.swift in Sources */,
 				B38687DB223969F700E51BE1 /* UIColor+z42.swift in Sources */,
+				E29F9A2E223986260039C1D7 /* ChartView.swift in Sources */,
 				E2D2C9882238590300BAAB97 /* SliderBackgroundView.swift in Sources */,
 				B38687C72239243D00E51BE1 /* RawModels.swift in Sources */,
 				B38687D9223969D500E51BE1 /* Extentions.swift in Sources */,

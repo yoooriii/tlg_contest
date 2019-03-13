@@ -40,7 +40,7 @@ extension Plane2d {
             let x0 = CGFloat(plane2d.vTime.values[i])
             let y0 = CGFloat(plane2d.vAmplitude.values[i])
             let x = (x0 + tx) / sx
-            let y = bounds.height - ((y0 + ty) / sy) // up side down y
+            let y = (y0 + ty) / sy // up side down y
             let pt = CGPoint(x:x, y:y)
             if 0 == i {     path.move(to: pt) }
             else {          path.addLine(to: pt) }
@@ -65,6 +65,7 @@ class BGLayer: CALayer {
             sbLayer.cornerRadius = CGFloat(i*2 + 3)
             sbLayer.borderWidth = 1
             sbLayer.backgroundColor = UIColor.clear.cgColor
+            sbLayer.isGeometryFlipped = true
         }
         setNeedsLayout()
     }
@@ -111,8 +112,6 @@ class BGLayer: CALayer {
 
 class SliderBackgroundView: UIView, ChartInterface {
     private var plane:Plane?
-    private var graphs = [SimpleGraphView]()
-    private var sublayers = [CAShapeLayer]()
 
     override class var layerClass: AnyClass { return BGLayer.self }
 
@@ -131,66 +130,5 @@ class SliderBackgroundView: UIView, ChartInterface {
     func setPlane(_ plane:Plane) {
         self.plane = plane
         self.bgLayer?.setPlane(plane)
-//        updateView()
-    }
-
-//    private func updateView() {
-//        if let plane = plane, let amplitudes = plane.vAmplitudes {
-//            let d = amplitudes.count - graphs.count
-//            if d > 0 {
-//                // add a few additional graphs
-//                addGraphs(d)
-//            } else if d < 0 {
-//                // remove a few not needed graphs
-//                for _ in d..<0 {
-//                    graphs.last?.removeFromSuperview()
-//                }
-//            }
-//
-//            // populate graphs with models
-//            var i = 0
-//            for g in graphs {
-//                let p2d = Plane2d(vTime: plane.vTime, vAmplitude:amplitudes[i])
-//                g.setPlane2d(p2d)
-//                i += 1
-//            }
-//        } else {
-//            // no plane, remove all graphs
-//            for g in graphs {
-//                g.removeFromSuperview()
-//            }
-//        }
-//    }
-
-
-    private func addGraphs(_ count:Int) {
-        for _ in 0..<count {
-            let graph = SimpleGraphView()
-            graphs.append(graph)
-            self.addSubview(graph)
-        }
-    }
-
-    override func willRemoveSubview(_ subview: UIView) {
-        super.willRemoveSubview(subview)
-
-        if let graph = subview as? SimpleGraphView {
-            if let indx = graphs.firstIndex(of: graph) {
-                graphs.remove(at:indx)
-            }
-        }
-    }
-
-}
-
-class SimpleGraphView: UIView {
-    override class var layerClass: AnyClass { return CAShapeLayer.self }
-
-    var shapeLayer: CAShapeLayer {
-        return self.layer as! CAShapeLayer
-    }
-
-    func setPlane2d(_ plane2d:Plane2d) {
-        print("SimpleGraphView:setPlane2d: \(plane2d)")
     }
 }
