@@ -4,6 +4,7 @@
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -22,7 +23,7 @@
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sXx-8d-soY" customClass="SliderBackgroundView" customModule="TelegramChart" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="88"/>
-                                        <color key="backgroundColor" red="1" green="0.38151723780000002" blue="0.41902859930000003" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gKF-Ec-AgJ" userLabel="Center View">
                                         <rect key="frame" x="108" y="0.0" width="103" height="88"/>
@@ -113,18 +114,47 @@
                                     <action selector="debugSlide:" destination="BFE-Jg-5j9" eventType="valueChanged" id="kK7-YZ-OaR"/>
                                 </connections>
                             </slider>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="J8T-zn-Dy8">
+                                <rect key="frame" x="255" y="50" width="100" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="100" id="Ga8-i8-2D8"/>
+                                    <constraint firstAttribute="height" constant="44" id="ihI-aL-QHt"/>
+                                </constraints>
+                                <state key="normal" title="Load"/>
+                                <connections>
+                                    <action selector="loadData:" destination="BYZ-38-t0r" eventType="touchUpInside" id="1Ci-9V-zvN"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zpk-SL-EhO">
+                                <rect key="frame" x="20" y="50" width="100" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="100" id="Bub-nQ-e0K"/>
+                                    <constraint firstAttribute="height" constant="44" id="yMV-h6-0aA"/>
+                                </constraints>
+                                <state key="normal" title="Show plane"/>
+                                <connections>
+                                    <action selector="showNextPlane:" destination="BYZ-38-t0r" eventType="touchUpInside" id="kzz-wm-Ml9"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="OBE-jJ-ap7" secondAttribute="bottom" constant="26" id="3tF-Lv-Ive"/>
+                            <constraint firstItem="J8T-zn-Dy8" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="30" id="6md-Hx-Vhu"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="J8T-zn-Dy8" secondAttribute="trailing" constant="20" id="FME-55-eOp"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="OBE-jJ-ap7" secondAttribute="trailing" constant="20" id="UAD-th-NCM"/>
                             <constraint firstItem="BFE-Jg-5j9" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="VAu-yZ-Kal"/>
+                            <constraint firstItem="Zpk-SL-EhO" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="bxH-3D-JoZ"/>
+                            <constraint firstItem="Zpk-SL-EhO" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="30" id="dzD-0S-zB7"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="BFE-Jg-5j9" secondAttribute="bottom" constant="100" id="fLG-S4-2uk"/>
                             <constraint firstItem="BFE-Jg-5j9" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="h2z-eY-3LP"/>
                             <constraint firstItem="OBE-jJ-ap7" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="myi-XK-TRn"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
+                    <connections>
+                        <outlet property="sliderView" destination="BFE-Jg-5j9" id="cIy-iS-rX9"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
                 <panGestureRecognizer minimumNumberOfTouches="1" id="kZo-14-LG4" userLabel="Left Slide Gesture">

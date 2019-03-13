@@ -12,7 +12,7 @@ class ScaleSliderView: UIView {
     @IBOutlet var sliderCenter: UIView!
     @IBOutlet var sliderLeft: UIView!
     @IBOutlet var sliderRight: UIView!
-    @IBOutlet var backgroundView: UIView!//SliderBackgroundView!
+    @IBOutlet var backgroundView: SliderBackgroundView?
     @IBOutlet var constraintLeft: NSLayoutConstraint!
     @IBOutlet var constraintRight: NSLayoutConstraint!
 
@@ -48,12 +48,12 @@ class ScaleSliderView: UIView {
         self.layer.borderWidth = 1
 
 
-        if let bgView = backgroundView as? SliderBackgroundView {
-            let shapeLayer = bgView.shapeLayer
+        if let bgView = backgroundView, let shapeLayer = bgView.shapeLayer {
+
             shapeLayer.strokeColor = UIColor.red.cgColor
             shapeLayer.fillColor = UIColor.yellow.cgColor
-            let path = CGMutablePath()
 
+            let path = CGMutablePath()
             stride(from: 0.0, to: 1000.0, by: 15.0).forEach {
                 x in
                 var transform  = CGAffineTransform(translationX: CGFloat(x), y: -5)
@@ -170,5 +170,12 @@ class ScaleSliderView: UIView {
     @IBAction func debugSlide(_ slider: UISlider) {
         let v = slider.value
         print("slider \(v)")
+    }
+
+}
+
+extension ScaleSliderView: ChartInterface {
+    func setPlane(_ plane:Plane) {
+        self.backgroundView?.setPlane(plane)
     }
 }

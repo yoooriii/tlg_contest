@@ -11,8 +11,8 @@ import Foundation
 protocol Vector {
     var id: String! {get set}
     var values: [Int64]! {get set}
-    var minValue: Int64? {get set}
-    var maxValue: Int64? {get set}
+    var minValue: Int64 {get set}
+    var maxValue: Int64 {get set}
 
     init(_ rawColumn:RawColumn)
 }
@@ -20,14 +20,14 @@ protocol Vector {
 class BasicVector: Vector {
     var id: String!
     var values: [Int64]!
-    var minValue: Int64!
-    var maxValue: Int64!
+    var minValue: Int64
+    var maxValue: Int64
 
     required init(_ rawColumn:RawColumn) {
         id = rawColumn.id
         values = rawColumn.values
-        minValue = rawColumn.minValue
-        maxValue = rawColumn.maxValue
+        minValue = rawColumn.minValue!
+        maxValue = rawColumn.maxValue!
     }
 }
 
@@ -55,6 +55,8 @@ class Plane {
 
     var vTime: VectorTime!
     var vAmplitudes: [VectorAmplitude]!
+    // key: VectorAmplitude.name; value: @localizedName
+    var localizedNames: [String:String]?
 
     init(rawPlane:RawPlane) {
 
