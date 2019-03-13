@@ -12,9 +12,21 @@ class ScaleSliderView: UIView {
     @IBOutlet var sliderCenter: UIView!
     @IBOutlet var sliderLeft: UIView!
     @IBOutlet var sliderRight: UIView!
-    @IBOutlet var backgroundView: SliderBackgroundView!
+    @IBOutlet var backgroundView: UIView!//SliderBackgroundView!
     @IBOutlet var constraintLeft: NSLayoutConstraint!
     @IBOutlet var constraintRight: NSLayoutConstraint!
+
+    var fixSliderWidth:CGFloat = -1
+    var dxl:CGFloat = -1
+    var dxr:CGFloat = -1
+    let minMargin:CGFloat = 10
+    let minWidth:CGFloat = 50
+
+    enum Move {
+        case left
+        case center
+        case right
+    }
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -36,42 +48,50 @@ class ScaleSliderView: UIView {
         self.layer.borderWidth = 1
 
 
-        let shapeLayer = backgroundView.shapeLayer
-        shapeLayer.strokeColor = UIColor.red.cgColor
-        shapeLayer.fillColor = UIColor.yellow.cgColor
-        let path = CGMutablePath()
+        if let bgView = backgroundView as? SliderBackgroundView {
+            let shapeLayer = bgView.shapeLayer
+            shapeLayer.strokeColor = UIColor.red.cgColor
+            shapeLayer.fillColor = UIColor.yellow.cgColor
+            let path = CGMutablePath()
 
-        stride(from: 0.0, to: 1000.0, by: 15.0).forEach {
-            x in
-            var transform  = CGAffineTransform(translationX: CGFloat(x), y: 30)
+            stride(from: 0.0, to: 1000.0, by: 15.0).forEach {
+                x in
+                var transform  = CGAffineTransform(translationX: CGFloat(x), y: -5)
 
-            let petal = CGPath(ellipseIn: CGRect(x: -20, y: 0, width: 40, height: 100),
-                               transform: &transform)
+                let petal = CGPath(ellipseIn: CGRect(x: -20, y: 0, width: 40, height: 100),
+                                   transform: &transform)
 
-            path.addPath(petal)
+                path.addPath(petal)
+            }
+
+            shapeLayer.path = path
         }
-
-        shapeLayer.path = path
 
     }
 
     @IBAction func onCenterSlide(_ recognizer: UIGestureRecognizer) {
         switch recognizer.state {
         case .began:
-            print("center.began: \(recognizer.location(in: self).x)")
-        case.cancelled:
-            break
+            let x = recognizer.location(in: self).x
+            fixSliderWidth = self.sliderCenter.frame.width
+            dxl = x - constraintLeft.constant
+            dxr = x - constraintRight.constant
+
         case .changed:
-            let centerWidth2 = self.sliderCenter.frame.width/2.0
-            let xl = recognizer.location(in: self).x - self.sliderLeft.frame.width/2.0 - centerWidth2
-            let xr = self.bounds.width - recognizer.location(in: self).x - self.sliderRight.frame.width/2.0 + centerWidth2
-            print("center.changed: \(recognizer.location(in: self).x); []=[\(xl) : \(xr)]")
+            let x = recognizer.location(in: self).x
+            let xl = x - self.sliderLeft.frame.width/2.0 - dxl
+            let xr = x - self.sliderRight.frame.width/2.0 - dxr
             self.constraintLeft.constant = xl
-//            self.constraintRight.constant = xr
+            self.constraintRight.constant = xr
+
         case .possible:
             break
-        case .ended:
-            print("center.ended: \(recognizer.location(in: self).x)")
+
+        case .cancelled, .ended:
+            fixSliderWidth = -1
+            dxl = -1
+            dxr = -1
+            validatePosition(.center)
 
         case .failed:
             break
@@ -81,16 +101,15 @@ class ScaleSliderView: UIView {
     @IBAction func onLeftSlide(_ recognizer: UIGestureRecognizer) {
         switch recognizer.state {
         case .began:
-            print("left.began: \(recognizer.location(in: self).x)")
-        case.cancelled:
             break
+
         case .changed:
-            print("left.changed: \(recognizer.location(in: self).x)")
             self.constraintLeft.constant = recognizer.location(in: self).x - self.sliderLeft.frame.width/2.0
         case .possible:
             break
-        case .ended:
-            print("left.ended: \(recognizer.location(in: self).x)")
+
+        case .cancelled, .ended:
+            validatePosition(.left)
 
         case .failed:
             break
@@ -100,19 +119,56 @@ class ScaleSliderView: UIView {
     @IBAction func onRightSlide(_ recognizer: UIGestureRecognizer) {
         switch recognizer.state {
         case .began:
-            print("right.began: \(recognizer.location(in: self).x)")
-        case.cancelled:
             break
         case .changed:
-            print("right.changed: \(recognizer.location(in: self).x)")
-            self.constraintRight.constant = self.bounds.width - recognizer.location(in: self).x - self.sliderRight.frame.width/2.0
+            self.constraintRight.constant = recognizer.location(in: self).x - self.sliderRight.frame.width/2.0
         case .possible:
             break
-        case .ended:
-            print("right.ended: \(recognizer.location(in: self).x)")
+        case .cancelled, .ended:
+            validatePosition(.right)
 
         case .failed:
             break
         }
+    }
+
+    private func validatePosition(_ move:Move) {
+        var fixWidth = constraintRight.constant - constraintLeft.constant
+        var xl = constraintLeft.constant
+        var xr = constraintRight.constant
+        let dw = fixWidth - minWidth
+        if dw < 0 {
+            fixWidth = minWidth
+            switch move {
+            case .left:
+                xl = xr - fixWidth
+            case .right:
+                xr = xl + fixWidth
+            case .center:
+                break
+            }
+        }
+
+        if constraintLeft.constant < minMargin {
+            xl = minMargin
+            xr = minMargin + fixWidth
+        }
+
+        let w = self.bounds.width
+        let xr2 = constraintRight.constant + sliderRight.frame.width + minMargin
+        if xr2 > w {
+            let xr0 = w - minMargin - sliderRight.frame.width
+            xr = xr0
+            xl = xr0 - fixWidth
+        }
+
+        constraintLeft.constant = xl
+        constraintRight.constant = xr
+    }
+
+    // DEBUG
+    @IBAction func debugSlide(_ slider: UISlider) {
+        let v = slider.value
+        print("slider \(v)")
     }
 }
