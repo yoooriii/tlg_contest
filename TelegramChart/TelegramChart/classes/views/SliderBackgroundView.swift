@@ -54,6 +54,7 @@ class BGLayer: CALayer {
     private var graphLayers = [CAShapeLayer]()
 
     func awake() {
+        print("BGLayer: contentsScale:\(self.contentsScale)")
         let colors = [UIColor.red, UIColor.green, UIColor.blue, UIColor.yellow, UIColor.magenta]
         for i in 0..<5 {
             let sbLayer = CAShapeLayer()
