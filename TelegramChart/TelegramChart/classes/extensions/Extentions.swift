@@ -8,7 +8,6 @@
 
 import UIKit
 
-
 extension VectorAmplitude {
     var color: UIColor? {
         get { return UIColor(string:self.colorString) }

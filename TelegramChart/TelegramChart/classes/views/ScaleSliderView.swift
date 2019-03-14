@@ -8,6 +8,11 @@
 
 import UIKit
 
+@objc protocol ScaleSliderViewDelegate {
+    func sliderDidChange(_ slider:ScaleSliderView, position:CGFloat)
+    func sliderDidChange(_ slider:ScaleSliderView, zoom:CGFloat)
+}
+
 class ScaleSliderView: UIView {
     @IBOutlet var sliderCenter: UIView!
     @IBOutlet var sliderLeft: UIView!
@@ -15,8 +20,8 @@ class ScaleSliderView: UIView {
     @IBOutlet var backgroundView: SliderBackgroundView?
     @IBOutlet var constraintLeft: NSLayoutConstraint!
     @IBOutlet var constraintRight: NSLayoutConstraint!
+    @IBOutlet var delegate:ScaleSliderViewDelegate?
 
-    var fixSliderWidth:CGFloat = -1
     var dxl:CGFloat = -1
     var dxr:CGFloat = -1
     let minMargin:CGFloat = 10
@@ -46,34 +51,12 @@ class ScaleSliderView: UIView {
         self.layer.borderColor = UIColor.gray.cgColor
         self.layer.cornerRadius = 15
         self.layer.borderWidth = 1
-
-
-        if let bgView = backgroundView, let shapeLayer = bgView.shapeLayer {
-
-            shapeLayer.strokeColor = UIColor.red.cgColor
-            shapeLayer.fillColor = UIColor.yellow.cgColor
-
-            let path = CGMutablePath()
-            stride(from: 0.0, to: 1000.0, by: 15.0).forEach {
-                x in
-                var transform  = CGAffineTransform(translationX: CGFloat(x), y: -5)
-
-                let petal = CGPath(ellipseIn: CGRect(x: -20, y: 0, width: 40, height: 100),
-                                   transform: &transform)
-
-                path.addPath(petal)
-            }
-
-            shapeLayer.path = path
-        }
-
     }
 
     @IBAction func onCenterSlide(_ recognizer: UIGestureRecognizer) {
         switch recognizer.state {
         case .began:
             let x = recognizer.location(in: self).x
-            fixSliderWidth = self.sliderCenter.frame.width
             dxl = x - constraintLeft.constant
             dxr = x - constraintRight.constant
 
@@ -87,11 +70,17 @@ class ScaleSliderView: UIView {
         case .possible:
             break
 
-        case .cancelled, .ended:
-            fixSliderWidth = -1
+        case .cancelled:
             dxl = -1
             dxr = -1
             validatePosition(.center)
+//            delegate?.sliderDidChange(self, position: getPosition())
+
+        case .ended:
+            dxl = -1
+            dxr = -1
+            validatePosition(.center)
+            delegate?.sliderDidChange(self, position: getPosition())
 
         case .failed:
             break
@@ -108,8 +97,13 @@ class ScaleSliderView: UIView {
         case .possible:
             break
 
-        case .cancelled, .ended:
+        case .ended:
             validatePosition(.left)
+            delegate?.sliderDidChange(self, zoom: getZoom())
+
+        case .cancelled:
+            validatePosition(.left)
+//            delegate?.sliderDidChange(self, zoom: getZoom())
 
         case .failed:
             break
@@ -124,8 +118,14 @@ class ScaleSliderView: UIView {
             self.constraintRight.constant = recognizer.location(in: self).x - self.sliderRight.frame.width/2.0
         case .possible:
             break
-        case .cancelled, .ended:
+
+        case .ended:
             validatePosition(.right)
+            delegate?.sliderDidChange(self, zoom: getZoom())
+
+        case .cancelled:
+            validatePosition(.right)
+//            delegate?.sliderDidChange(self, zoom: getZoom())
 
         case .failed:
             break
@@ -166,16 +166,24 @@ class ScaleSliderView: UIView {
         constraintRight.constant = xr
     }
 
+    /// zoom and position normalized [0...1]
+    func getPosition() -> CGFloat {
+        return ((constraintLeft.constant + constraintRight.constant)/2.0 - frame.minX) / bounds.width
+
+    }
+    func getZoom() -> CGFloat {
+        return (constraintRight.constant - constraintLeft.constant) / bounds.width
+    }
+
     // DEBUG
     @IBAction func debugSlide(_ slider: UISlider) {
         let v = slider.value
         print("slider \(v)")
     }
 
-}
-
-extension ScaleSliderView: ChartInterface {
-    func setPlane(_ plane:Plane) {
-        self.backgroundView?.setPlane(plane)
+//////////
+    func setPlane3d(_ p3d:Plane3d) {
+        backgroundView?.setPlane3d(p3d)
     }
+
 }

@@ -8,6 +8,9 @@
 
 import Foundation
 
+/// Raw Models used to hold json models
+/// no UIKit classes available here since the models supposed to work on macOS as well
+
 struct RawColumn: Decodable {
     let id: String!
     let values: [Int64]!
@@ -39,4 +42,3 @@ struct RawPlane: Decodable {
     let names: [String: String]!
     let types: [String: String]!
 }
-

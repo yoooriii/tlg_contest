@@ -18,6 +18,13 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Bt4-qA-oPP" customClass="ChartView" customModule="TelegramChart" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="300"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="300" id="zQE-au-tsZ"/>
+                                </constraints>
+                            </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BFE-Jg-5j9" customClass="ScaleSliderView" customModule="TelegramChart" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="479" width="375" height="88"/>
                                 <subviews>
@@ -116,6 +123,7 @@
                             </slider>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="J8T-zn-Dy8">
                                 <rect key="frame" x="255" y="50" width="100" height="44"/>
+                                <color key="backgroundColor" white="1" alpha="0.20023544520547945" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="100" id="Ga8-i8-2D8"/>
                                     <constraint firstAttribute="height" constant="44" id="ihI-aL-QHt"/>
@@ -127,6 +135,7 @@
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zpk-SL-EhO">
                                 <rect key="frame" x="20" y="50" width="100" height="44"/>
+                                <color key="backgroundColor" white="1" alpha="0.19611515410958905" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="100" id="Bub-nQ-e0K"/>
                                     <constraint firstAttribute="height" constant="44" id="yMV-h6-0aA"/>
@@ -136,23 +145,40 @@
                                     <action selector="showNextPlane:" destination="BYZ-38-t0r" eventType="touchUpInside" id="kzz-wm-Ml9"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tev-co-Ab4" userLabel="debug Info Label">
+                                <rect key="frame" x="10" y="642" width="355" height="25"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="25" id="m7l-gc-v9X"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="CourierNewPSMT" family="Courier New" pointSize="14"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="tev-co-Ab4" secondAttribute="trailing" constant="10" id="296-EE-V2q"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="OBE-jJ-ap7" secondAttribute="bottom" constant="26" id="3tF-Lv-Ive"/>
                             <constraint firstItem="J8T-zn-Dy8" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="30" id="6md-Hx-Vhu"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="J8T-zn-Dy8" secondAttribute="trailing" constant="20" id="FME-55-eOp"/>
+                            <constraint firstItem="Bt4-qA-oPP" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="Iz2-dk-kzO"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="OBE-jJ-ap7" secondAttribute="trailing" constant="20" id="UAD-th-NCM"/>
                             <constraint firstItem="BFE-Jg-5j9" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="VAu-yZ-Kal"/>
+                            <constraint firstAttribute="bottom" secondItem="tev-co-Ab4" secondAttribute="bottom" id="WrY-Ea-tsr"/>
                             <constraint firstItem="Zpk-SL-EhO" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="bxH-3D-JoZ"/>
                             <constraint firstItem="Zpk-SL-EhO" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="30" id="dzD-0S-zB7"/>
+                            <constraint firstItem="Bt4-qA-oPP" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="ezv-dT-NrQ"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="BFE-Jg-5j9" secondAttribute="bottom" constant="100" id="fLG-S4-2uk"/>
                             <constraint firstItem="BFE-Jg-5j9" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="h2z-eY-3LP"/>
                             <constraint firstItem="OBE-jJ-ap7" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="myi-XK-TRn"/>
+                            <constraint firstItem="tev-co-Ab4" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="10" id="oZg-xd-pLq"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Bt4-qA-oPP" secondAttribute="trailing" id="y4D-LF-7p4"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
+                        <outlet property="chartView" destination="Bt4-qA-oPP" id="3Nw-jC-ypE"/>
+                        <outlet property="infoLabel" destination="tev-co-Ab4" id="pSm-AN-2uf"/>
                         <outlet property="sliderView" destination="BFE-Jg-5j9" id="cIy-iS-rX9"/>
                     </connections>
                 </viewController>

@@ -8,6 +8,10 @@
 
 import Foundation
 
+/// models convenient for ios/macOS internal logic (when raw json models aren't)
+/// no UIKit classes available here since the models supposed to work on macOS as well
+
+/// basic interface for both types (x and line)
 protocol Vector {
     var id: String! {get set}
     var values: [Int64]! {get set}
@@ -47,6 +51,7 @@ class VectorAmplitude: BasicVector {
     }
 }
 
+/// class to represent a plane with one x and many y points (axes)
 class Plane {
     enum VectorType: String {
         case x = "x"
@@ -59,15 +64,16 @@ class Plane {
     var localizedNames: [String:String]?
 
     init(rawPlane:RawPlane) {
-
         var amplitudes = [VectorAmplitude]()
         for aColumn in rawPlane.columns {
+            // simple validation logic to prevent using invalid vectors
             guard let id = aColumn.id else { continue }
             guard let rawType = rawPlane.types[id] else { continue }
             guard let type = VectorType(rawValue: rawType) else { continue }
 
             switch type {
             case .x:
+                // FIXIT: what if there is more than one x type item?
                 vTime = VectorTime(aColumn)
 
             case .line:
@@ -83,15 +89,22 @@ class Plane {
 
 struct GraphicsContainer: Decodable {
     let planes: [Plane]!
+    var size:Int { get { return planes.count }}
 
     init(from decoder: Decoder) throws {
         var rawItems = try decoder.unkeyedContainer()
         var planes = [Plane]()
         while !rawItems.isAtEnd {
             let rawPlane = try rawItems.decode(RawPlane.self)
-            let pl2 = Plane(rawPlane:rawPlane)
-            planes.append(pl2)
+            let plane = Plane(rawPlane:rawPlane)
+            planes.append(plane)
         }
         self.planes = planes
+    }
+
+    func setLocalizedNames(localizedNames: [String:String]?) {
+        for plane in planes {
+            plane.localizedNames = localizedNames
+        }
     }
 }

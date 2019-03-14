@@ -10,15 +10,22 @@ import UIKit
 
 class ChartViewController: UIViewController {
     @IBOutlet var sliderView: ScaleSliderView!
+    @IBOutlet var chartView:ChartView!
+    @IBOutlet var infoLabel:UILabel!
+
     var nextIndex = -1
     var graphicsContainer:GraphicsContainer?
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        sliderView.delegate = self
     }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+
+//        let vvv = TextHandler()
+//        vvv.test1(view:self.view)
     }
 
     @IBAction func loadData(_ sender: AnyObject) {
@@ -61,13 +68,35 @@ class ChartViewController: UIViewController {
             let plCount = container.planes.count
             if index < 0 || index >= plCount {
                 print("wrong index \(index)")
+                infoLabel.text = "wrong index \(index)"
+                return
             }
 
+            var infoTxt = "#[\(index):\(container.planes.count)]: "
             let plane = container.planes[index]
-            sliderView.setPlane(plane)
+            // convert plane to Plane3d
+            // debug size & origin
+            let bounds = CGRect(x:100, y:100, width:1000, height:1000)
+            var arrP2d = [Plane2d]()
+            for amp in plane.vAmplitudes {
+                var p2d = Plane2d(vTime: plane.vTime, vAmplitude:amp)
+                p2d.color = amp.color
+                p2d.bounds = bounds
+                p2d.path = p2d.pathInRect(bounds)
+                arrP2d.append(p2d)
+
+                infoTxt += "\(amp.values.count) "
+            }
+            let p3d = Plane3d(planes:arrP2d)
+            sliderView.setPlane3d(p3d)
+            chartView.setPlane3d(p3d)
+
+            infoLabel.text = infoTxt
+
 
         } else {
             print("no graphicsContainer")
+            infoLabel.text = "no graphicsContainer"
         }
 
 
@@ -75,3 +104,12 @@ class ChartViewController: UIViewController {
 
 }
 
+extension ChartViewController: ScaleSliderViewDelegate {
+    func sliderDidChange(_ slider:ScaleSliderView, position:CGFloat) {
+        infoLabel.text = "slider pos  [p:z]=[\(String(format:"%f2.1", slider.getPosition()*100.0)) : \(String(format:"%f2.1", slider.getZoom()*100.0))]"
+    }
+
+    func sliderDidChange(_ slider:ScaleSliderView, zoom:CGFloat) {
+        infoLabel.text = "slider pos  [p:z]=[\(String(format:"%f2.1", slider.getPosition()*100.0)) : \(String(format:"%f2.1", slider.getZoom()*100.0))]"
+    }
+}

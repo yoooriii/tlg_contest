@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B34B9160223A4D86001490C8 /* UIModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = B34B915F223A4D86001490C8 /* UIModels.swift */; };
+		B34B9162223A702A001490C8 /* ChartShapeLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B34B9161223A702A001490C8 /* ChartShapeLayer.swift */; };
+		B34B9164223A91D2001490C8 /* TextHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = B34B9163223A91D2001490C8 /* TextHandler.swift */; };
 		B38687C72239243D00E51BE1 /* RawModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = B38687C52239243D00E51BE1 /* RawModels.swift */; };
 		B38687C82239243D00E51BE1 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = B38687C62239243D00E51BE1 /* Models.swift */; };
 		B38687CE2239259300E51BE1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B38687CA2239259300E51BE1 /* LaunchScreen.storyboard */; };
@@ -23,6 +26,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		B34B915F223A4D86001490C8 /* UIModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIModels.swift; sourceTree = "<group>"; };
+		B34B9161223A702A001490C8 /* ChartShapeLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartShapeLayer.swift; sourceTree = "<group>"; };
+		B34B9163223A91D2001490C8 /* TextHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextHandler.swift; sourceTree = "<group>"; };
 		B38687C52239243D00E51BE1 /* RawModels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RawModels.swift; sourceTree = "<group>"; };
 		B38687C62239243D00E51BE1 /* Models.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
 		B38687CB2239259300E51BE1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -56,6 +62,7 @@
 			children = (
 				B38687C62239243D00E51BE1 /* Models.swift */,
 				B38687C52239243D00E51BE1 /* RawModels.swift */,
+				B34B915F223A4D86001490C8 /* UIModels.swift */,
 			);
 			path = models;
 			sourceTree = "<group>";
@@ -140,6 +147,8 @@
 				E2D2C98522384D6800BAAB97 /* ScaleSliderView.swift */,
 				E2D2C9872238590300BAAB97 /* SliderBackgroundView.swift */,
 				E29F9A2D223986260039C1D7 /* ChartView.swift */,
+				B34B9161223A702A001490C8 /* ChartShapeLayer.swift */,
+				B34B9163223A91D2001490C8 /* TextHandler.swift */,
 			);
 			path = views;
 			sourceTree = "<group>";
@@ -219,10 +228,13 @@
 				E2D2C98622384D6800BAAB97 /* ScaleSliderView.swift in Sources */,
 				E2D2C97F22384C9700BAAB97 /* AppDelegate.swift in Sources */,
 				E2D2C98422384D0A00BAAB97 /* ChartViewController.swift in Sources */,
+				B34B9164223A91D2001490C8 /* TextHandler.swift in Sources */,
 				B38687C82239243D00E51BE1 /* Models.swift in Sources */,
 				B38687DB223969F700E51BE1 /* UIColor+z42.swift in Sources */,
 				E29F9A2E223986260039C1D7 /* ChartView.swift in Sources */,
+				B34B9162223A702A001490C8 /* ChartShapeLayer.swift in Sources */,
 				E2D2C9882238590300BAAB97 /* SliderBackgroundView.swift in Sources */,
+				B34B9160223A4D86001490C8 /* UIModels.swift in Sources */,
 				B38687C72239243D00E51BE1 /* RawModels.swift in Sources */,
 				B38687D9223969D500E51BE1 /* Extentions.swift in Sources */,
 			);
