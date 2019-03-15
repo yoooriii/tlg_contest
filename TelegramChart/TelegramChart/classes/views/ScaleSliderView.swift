@@ -9,6 +9,7 @@
 import UIKit
 
 @objc protocol ScaleSliderViewDelegate {
+    func sliderChanging(_ slider:ScaleSliderView)
     func sliderDidChange(_ slider:ScaleSliderView, position:CGFloat)
     func sliderDidChange(_ slider:ScaleSliderView, zoom:CGFloat)
 }
@@ -66,6 +67,7 @@ class ScaleSliderView: UIView {
             let xr = x - self.sliderRight.frame.width/2.0 - dxr
             self.constraintLeft.constant = xl
             self.constraintRight.constant = xr
+            delegate?.sliderChanging(self)
 
         case .possible:
             break
@@ -94,6 +96,8 @@ class ScaleSliderView: UIView {
 
         case .changed:
             self.constraintLeft.constant = recognizer.location(in: self).x - self.sliderLeft.frame.width/2.0
+            delegate?.sliderChanging(self)
+
         case .possible:
             break
 
@@ -116,6 +120,8 @@ class ScaleSliderView: UIView {
             break
         case .changed:
             self.constraintRight.constant = recognizer.location(in: self).x - self.sliderRight.frame.width/2.0
+            delegate?.sliderChanging(self)
+
         case .possible:
             break
 

@@ -32,4 +32,12 @@ extension UIColor {
                   blue: CGFloat(rgb & 0xFF) / 255.0,
                   alpha: 1)
     }
+
+    static func random() -> UIColor {
+        let max = CGFloat(UInt32.max)
+        let r = CGFloat(arc4random())/max
+        let g = CGFloat(arc4random())/max
+        let b = CGFloat(arc4random())/max
+        return UIColor(red:r, green:g, blue:b, alpha:1.0)
+    }
 }

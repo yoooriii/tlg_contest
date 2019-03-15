@@ -17,6 +17,8 @@
 		B38687D42239292E00E51BE1 /* chart_data.json in Resources */ = {isa = PBXBuildFile; fileRef = B38687D32239292E00E51BE1 /* chart_data.json */; };
 		B38687D9223969D500E51BE1 /* Extentions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B38687D8223969D500E51BE1 /* Extentions.swift */; };
 		B38687DB223969F700E51BE1 /* UIColor+z42.swift in Sources */ = {isa = PBXBuildFile; fileRef = B38687DA223969F700E51BE1 /* UIColor+z42.swift */; };
+		B3C51579223BF98400E56CAE /* CollectionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3C51578223BF98400E56CAE /* CollectionVC.swift */; };
+		B3C5157B223C1CAA00E56CAE /* ChartTileLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3C5157A223C1CAA00E56CAE /* ChartTileLayer.swift */; };
 		E29F9A2E223986260039C1D7 /* ChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29F9A2D223986260039C1D7 /* ChartView.swift */; };
 		E2D2C97222384C2500BAAB97 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E2D2C97122384C2500BAAB97 /* Assets.xcassets */; };
 		E2D2C97F22384C9700BAAB97 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D2C97D22384C9600BAAB97 /* AppDelegate.swift */; };
@@ -36,6 +38,8 @@
 		B38687D32239292E00E51BE1 /* chart_data.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = chart_data.json; sourceTree = "<group>"; };
 		B38687D8223969D500E51BE1 /* Extentions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extentions.swift; sourceTree = "<group>"; };
 		B38687DA223969F700E51BE1 /* UIColor+z42.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+z42.swift"; sourceTree = "<group>"; };
+		B3C51578223BF98400E56CAE /* CollectionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionVC.swift; sourceTree = "<group>"; };
+		B3C5157A223C1CAA00E56CAE /* ChartTileLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartTileLayer.swift; sourceTree = "<group>"; };
 		E29F9A2D223986260039C1D7 /* ChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartView.swift; sourceTree = "<group>"; };
 		E2D2C96722384C2300BAAB97 /* TelegramChart.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TelegramChart.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E2D2C97122384C2500BAAB97 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -137,6 +141,7 @@
 			isa = PBXGroup;
 			children = (
 				E2D2C98222384D0A00BAAB97 /* ChartViewController.swift */,
+				B3C51578223BF98400E56CAE /* CollectionVC.swift */,
 			);
 			path = vc;
 			sourceTree = "<group>";
@@ -149,6 +154,7 @@
 				E29F9A2D223986260039C1D7 /* ChartView.swift */,
 				B34B9161223A702A001490C8 /* ChartShapeLayer.swift */,
 				B34B9163223A91D2001490C8 /* TextHandler.swift */,
+				B3C5157A223C1CAA00E56CAE /* ChartTileLayer.swift */,
 			);
 			path = views;
 			sourceTree = "<group>";
@@ -231,11 +237,13 @@
 				B34B9164223A91D2001490C8 /* TextHandler.swift in Sources */,
 				B38687C82239243D00E51BE1 /* Models.swift in Sources */,
 				B38687DB223969F700E51BE1 /* UIColor+z42.swift in Sources */,
+				B3C5157B223C1CAA00E56CAE /* ChartTileLayer.swift in Sources */,
 				E29F9A2E223986260039C1D7 /* ChartView.swift in Sources */,
 				B34B9162223A702A001490C8 /* ChartShapeLayer.swift in Sources */,
 				E2D2C9882238590300BAAB97 /* SliderBackgroundView.swift in Sources */,
 				B34B9160223A4D86001490C8 /* UIModels.swift in Sources */,
 				B38687C72239243D00E51BE1 /* RawModels.swift in Sources */,
+				B3C51579223BF98400E56CAE /* CollectionVC.swift in Sources */,
 				B38687D9223969D500E51BE1 /* Extentions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -382,7 +390,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = G99VP5HXV7;
 				INFOPLIST_FILE = TelegramChart/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -391,6 +399,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.pe.lokhmatoff.TelegramChart;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = leeloo_dev_anyapp;
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -400,7 +409,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = G99VP5HXV7;
 				INFOPLIST_FILE = TelegramChart/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
