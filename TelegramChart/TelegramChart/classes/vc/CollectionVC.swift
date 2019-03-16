@@ -30,6 +30,7 @@ class CollectionVC: UIViewController {
     @IBOutlet var sliderZoom: UISlider!
     @IBOutlet var infoLabel: UILabel!
 
+
     var plane3d:Plane3d?
     var planeIndex = -1
     var graphicsContainer:GraphicsContainer? {
@@ -46,6 +47,7 @@ class CollectionVC: UIViewController {
 
         let layout = collectionView.collectionViewLayout
         print("layout: \(layout)")
+
     }
 
     @IBAction func switchPlane(_ sender: UIButton) {
