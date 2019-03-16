@@ -262,6 +262,7 @@
                                 </cells>
                                 <connections>
                                     <outlet property="dataSource" destination="1L4-cZ-iIy" id="0bn-X9-RJo"/>
+                                    <outlet property="delegate" destination="1L4-cZ-iIy" id="nuX-w7-byP"/>
                                 </connections>
                             </collectionView>
                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="M4q-ZO-UkG">
