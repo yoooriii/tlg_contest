@@ -7,7 +7,7 @@
 //
 
 import Foundation
-//import CoreGraphics
+import CoreGraphics
 
 /// models convenient for ios/macOS internal logic (when raw json models aren't)
 /// no UIKit classes available here since the models supposed to work on macOS as well
@@ -18,6 +18,22 @@ protocol Vector {
     var values: [Int64]! {get set}
     var minValue: Int64 {get set}
     var maxValue: Int64 {get set}
+}
+
+struct MinMax {
+    let min:CGFloat!
+    let max:CGFloat!
+}
+
+struct MinMaxI64 {
+    let min: Int64!
+    let max: Int64!
+}
+
+struct Range {
+    let origin: Double!
+    let length: Double!
+    var end:Double { get { return origin + length } }
 }
 
 class BasicVector: Vector {
@@ -38,9 +54,9 @@ class BasicVector: Vector {
         scale = Double(maxValue - minValue) / normal
     }
 
-    func toNormal(_ originalValue:Int64) -> Double {
-        return Double(originalValue - minValue)/scale
-    }
+//    func toNormal(_ originalValue:Int64) -> Double {
+//        return Double(originalValue - minValue)/scale
+//    }
 
     func normalValue(at index:Int) -> Double {
         let originalValue = values[index]
@@ -107,14 +123,13 @@ class Plane {
 struct GraphicsContainer: Decodable {
     let planes: [Plane]!
     var size:Int { get { return planes.count }}
-    static var normal = Double(1000)
 
     init(from decoder: Decoder) throws {
         var rawItems = try decoder.unkeyedContainer()
         var planes = [Plane]()
         while !rawItems.isAtEnd {
             let rawPlane = try rawItems.decode(RawPlane.self)
-            let plane = Plane(rawPlane:rawPlane, normal:GraphicsContainer.normal)
+            let plane = Plane(rawPlane:rawPlane, normal:Double(LogicCanvas.SIZE))
             planes.append(plane)
         }
         self.planes = planes

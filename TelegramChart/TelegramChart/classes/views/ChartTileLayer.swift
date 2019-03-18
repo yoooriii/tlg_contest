@@ -8,21 +8,21 @@
 
 import UIKit
 
+struct Slice {
+    let pathModels:[PathModel]!
+}
+
 struct PathModel {
     let path: CGPath!
     let color: UIColor
     let lineWidth: CGFloat
 }
 
-struct MinMax {
-    let min:CGFloat
-    let max:CGFloat
-}
-
 class ChartTileLayer: CALayer {
     private var contentLayers = [CAShapeLayer]()
     private let maxLayerCount = 5
     private var verticalZoom = CGFloat(1)
+    private var verticalOffset = CGFloat(0)
 
     override init() {
         super.init()
@@ -36,6 +36,7 @@ class ChartTileLayer: CALayer {
 
     private func internalInit() {
         self.isGeometryFlipped = true
+        self.masksToBounds = true
         for _ in 0..<maxLayerCount {
             let layer = CAShapeLayer()
             self.addSublayer(layer)
@@ -44,6 +45,10 @@ class ChartTileLayer: CALayer {
             layer.fillColor = UIColor.clear.cgColor
             layer.lineWidth = 1.0
             layer.lineJoin = .round
+            //TODO: remove debug
+            layer.anchorPoint = CGPoint(x:0.5, y:1.0) //???
+            layer.borderColor = UIColor.brown.cgColor
+            layer.borderWidth = 1.0
         }
     }
 
@@ -70,7 +75,7 @@ class ChartTileLayer: CALayer {
         }
     }
 
-    // collect & sort out extremums from visible graphs
+    // collect & sort out extremums from visible graphs // for debug only
     func getExtremumY() -> MinMax? {
         var min = CGFloat(Int.max)
         var max = CGFloat(Int.min)
@@ -86,19 +91,32 @@ class ChartTileLayer: CALayer {
 
     func clear() {
         verticalZoom = CGFloat(1)
+        verticalOffset = CGFloat(0)
         for layer in contentLayers {
             layer.path = nil
             layer.isHidden = true
+            layer.setAffineTransform(CGAffineTransform.identity)
         }
     }
 
-    func setVerticalZoom(_ zoom:CGFloat) {
+    func setVertical(zoom:CGFloat, offset:CGFloat) {
         verticalZoom = zoom
+        verticalOffset = offset
+//        print("zoom:\(zoom); offs:\(offset);")
+        let tt = CGAffineTransform(scaleX: 1.0, y: verticalZoom)
+        for layer in contentLayers {
+            if !layer.isHidden {
+                layer.setAffineTransform(tt)
+            }
+        }
+        setNeedsLayout()
     }
 
     override func layoutSublayers() {
+        var rect = bounds
+        rect.origin.y = verticalOffset
         for layer in contentLayers {
-            layer.frame = bounds
+            layer.frame = rect
         }
     }
 }

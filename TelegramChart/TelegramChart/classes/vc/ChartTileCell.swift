@@ -17,6 +17,15 @@ class ChartTileCell: UICollectionViewCell /* UICollectionReusableView */ {
         get { return layer as? ChartTileLayer }
     }
 
+    var slice:Slice? {
+        didSet { updateSlice() }
+    }
+
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        titleLabel?.layer.isGeometryFlipped = true
+    }
+
     override func prepareForReuse() {
         tileLayer?.clear()
     }
@@ -25,11 +34,20 @@ class ChartTileCell: UICollectionViewCell /* UICollectionReusableView */ {
         tileLayer?.setPathModels(paths)
     }
 
+    private func updateSlice() {
+        guard let tileLayer = self.tileLayer else { return }
+        if let slice = self.slice {
+            tileLayer.setPathModels(slice.pathModels)
+        } else {
+            tileLayer.clear()
+        }
+    }
+
     func getExtremumY() -> MinMax? {
         return tileLayer?.getExtremumY()
     }
 
-    func setVerticalZoom(_ zoom:CGFloat) {
-        tileLayer?.setVerticalZoom(zoom)
+    func setVertical(zoom:CGFloat, offset:CGFloat) {
+        tileLayer?.setVertical(zoom:zoom, offset:offset)
     }
 }

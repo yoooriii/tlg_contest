@@ -59,16 +59,38 @@ class CollectionVC2: UIViewController {
     }
 
     @IBAction func sliderChangeAction(_ sender: UISlider) {
-        sliderChange(position: CGFloat(sliderPosition!.value), zoom: CGFloat(sliderZoom!.value))
+        let value = CGFloat(sender.value)
+        if sender == sliderPosition {
+            chartVerticalOffset = (value - 0.5) * 1000
+        }
+        else if sender == sliderZoom {
+            chartVerticalZoom = value * 2.5 + 0.5
+        }
+        updateZoom()
     }
 
     private func sliderChange(position:CGFloat, zoom:CGFloat) {
-        self.chartZoom = zoom * 2.5 + 0.5
+        self.chartVerticalZoom = zoom * 2.5 + 0.5
         print("on slider change: \(Int(position * 100.0)) : \(Int(zoom * 100.0))")
    //     updateZoomInTiles()
+        updateZoom()
     }
 
-    var chartZoom = CGFloat(1)
+    private var chartVerticalZoom = CGFloat(1)
+    private var chartVerticalOffset = CGFloat(0)
+
+    private func updateZoom() {
+        let iItems = collectionView.indexPathsForVisibleItems
+        for iPath in iItems {
+            let item = collectionView.cellForItem(at: iPath)
+            if let item = item as? ChartTileCell {
+                item.setVertical(zoom:chartVerticalZoom, offset:chartVerticalOffset)
+            }
+        }
+    }
+
+
+
 //    private func updateZoomInTiles() {
 //        guard let planes = plane3d?.planes else {
 //            // no data models, nothing to show
@@ -86,7 +108,7 @@ class CollectionVC2: UIViewController {
 //
 //                let MASTER_SIZE = CGSize(width:1000, height:1000)
 //                let height = collectionView.frame.height - 2.0
-//                let tt0 = CGAffineTransform(scaleX: contentWidth/MASTER_SIZE.width, y: height/MASTER_SIZE.height * chartZoom)
+//                let tt0 = CGAffineTransform(scaleX: contentWidth/MASTER_SIZE.width, y: height/MASTER_SIZE.height * chartVerticalZoom)
 //                let tt4 = CGAffineTransform(translationX: -offsetX, y: 0)
 //                var tt3 = tt0.concatenating(tt4)
 //
@@ -145,6 +167,7 @@ class CollectionVC2: UIViewController {
 
         let p3d = logicCanvas!.createPlane3d()
         scrollController.setPlane3d(p3d)
+        infoTxt += "; count:\(logicCanvas!.count)"
         infoLabel.text = infoTxt
         collectionView.reloadData()
     }
@@ -164,19 +187,13 @@ extension CollectionVC2: UICollectionViewDataSource {
             return cell
         }
         tileCell.titleLabel?.text = "\(indexPath.section):\(indexPath.item)"
-        tileCell.titleLabel?.layer.isGeometryFlipped = true
 
         guard let canvas = logicCanvas else {
             // no data models, nothing to show
             return cell
         }
 
-        let slice = canvas.slice(at:indexPath.item)
-        if let slice = slice {
-            tileCell.setPathModels(slice)
-        } else {
-            tileCell.setPathModels(nil)
-        }
+        tileCell.slice = canvas.slice(at:indexPath.item)
         return cell
     }
 }
