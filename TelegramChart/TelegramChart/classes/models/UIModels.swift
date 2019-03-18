@@ -8,6 +8,25 @@
 
 import UIKit
 
+class VectorRange: NSObject {
+    var position: Double
+    var length: Double
+
+    var endPosition: Double {
+        get { return position + length }
+    }
+
+    convenience init(position: CGFloat, length: CGFloat) {
+        self.init(position: Double(position), length: Double(length))
+    }
+
+    init(position: Double, length: Double) {
+        self.position = position
+        self.length = length
+    }
+}
+
+
 /// plane model, keeps one x and one y vectors
 struct Plane2d {
     let vTime: VectorTime!

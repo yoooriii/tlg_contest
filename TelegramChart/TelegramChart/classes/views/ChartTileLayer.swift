@@ -9,9 +9,14 @@
 import UIKit
 
 struct PathModel {
-    let path: CGPath?
+    let path: CGPath!
     let color: UIColor
     let lineWidth: CGFloat
+}
+
+struct MinMax {
+    let min:CGFloat
+    let max:CGFloat
 }
 
 class ChartTileLayer: CALayer {
@@ -62,6 +67,20 @@ class ChartTileLayer: CALayer {
                 layer.path = nil
             }
         }
+    }
+
+    // collect & sort out extremums from visible graphs
+    func getExtremumY() -> MinMax? {
+        var min = CGFloat(Int.max)
+        var max = CGFloat(Int.min)
+        for layer in contentLayers {
+            if !layer.isHidden, let path = layer.path {
+                let box = path.boundingBoxOfPath
+                if min > box.minY { min = box.minY }
+                if max < box.maxY { max = box.maxY }
+            }
+        }
+        return min < max ? MinMax(min:min, max:max) : nil
     }
 
     func clear() {

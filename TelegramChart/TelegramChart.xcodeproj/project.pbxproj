@@ -22,7 +22,11 @@
 		B38687DB223969F700E51BE1 /* UIColor+z42.swift in Sources */ = {isa = PBXBuildFile; fileRef = B38687DA223969F700E51BE1 /* UIColor+z42.swift */; };
 		B3C51579223BF98400E56CAE /* CollectionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3C51578223BF98400E56CAE /* CollectionVC.swift */; };
 		B3C5157B223C1CAA00E56CAE /* ChartTileLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3C5157A223C1CAA00E56CAE /* ChartTileLayer.swift */; };
+		E23A949C223E6EF800056A2C /* LogicCanvas.swift in Sources */ = {isa = PBXBuildFile; fileRef = E23A949B223E6EF800056A2C /* LogicCanvas.swift */; };
+		E23A949E223EC82000056A2C /* ChartTileCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E23A949D223EC82000056A2C /* ChartTileCell.swift */; };
+		E23A94A0223EC8A600056A2C /* CollectionVC2.swift in Sources */ = {isa = PBXBuildFile; fileRef = E23A949F223EC8A600056A2C /* CollectionVC2.swift */; };
 		E29F9A2E223986260039C1D7 /* ChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29F9A2D223986260039C1D7 /* ChartView.swift */; };
+		E29F9A30223DB0630039C1D7 /* ScrollController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29F9A2F223DB0630039C1D7 /* ScrollController.swift */; };
 		E2D2C97222384C2500BAAB97 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E2D2C97122384C2500BAAB97 /* Assets.xcassets */; };
 		E2D2C97F22384C9700BAAB97 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D2C97D22384C9600BAAB97 /* AppDelegate.swift */; };
 		E2D2C98422384D0A00BAAB97 /* ChartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D2C98222384D0A00BAAB97 /* ChartViewController.swift */; };
@@ -46,7 +50,11 @@
 		B38687DA223969F700E51BE1 /* UIColor+z42.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+z42.swift"; sourceTree = "<group>"; };
 		B3C51578223BF98400E56CAE /* CollectionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionVC.swift; sourceTree = "<group>"; };
 		B3C5157A223C1CAA00E56CAE /* ChartTileLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartTileLayer.swift; sourceTree = "<group>"; };
+		E23A949B223E6EF800056A2C /* LogicCanvas.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogicCanvas.swift; sourceTree = "<group>"; };
+		E23A949D223EC82000056A2C /* ChartTileCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartTileCell.swift; sourceTree = "<group>"; };
+		E23A949F223EC8A600056A2C /* CollectionVC2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionVC2.swift; sourceTree = "<group>"; };
 		E29F9A2D223986260039C1D7 /* ChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartView.swift; sourceTree = "<group>"; };
+		E29F9A2F223DB0630039C1D7 /* ScrollController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollController.swift; sourceTree = "<group>"; };
 		E2D2C96722384C2300BAAB97 /* TelegramChart.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TelegramChart.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E2D2C97122384C2500BAAB97 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E2D2C97622384C2500BAAB97 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -74,6 +82,7 @@
 				B38687C52239243D00E51BE1 /* RawModels.swift */,
 				B34B915F223A4D86001490C8 /* UIModels.swift */,
 				B347D161223D4033006179D8 /* TestModels.swift */,
+				E23A949B223E6EF800056A2C /* LogicCanvas.swift */,
 			);
 			path = models;
 			sourceTree = "<group>";
@@ -147,9 +156,12 @@
 		E2D2C98122384D0A00BAAB97 /* vc */ = {
 			isa = PBXGroup;
 			children = (
-				E2D2C98222384D0A00BAAB97 /* ChartViewController.swift */,
 				B3C51578223BF98400E56CAE /* CollectionVC.swift */,
+				E23A949F223EC8A600056A2C /* CollectionVC2.swift */,
+				E2D2C98222384D0A00BAAB97 /* ChartViewController.swift */,
 				B347D165223D5011006179D8 /* ZoomVC.swift */,
+				E29F9A2F223DB0630039C1D7 /* ScrollController.swift */,
+				E23A949D223EC82000056A2C /* ChartTileCell.swift */,
 			);
 			path = vc;
 			sourceTree = "<group>";
@@ -243,11 +255,15 @@
 				E2D2C98622384D6800BAAB97 /* ScaleSliderView.swift in Sources */,
 				E2D2C97F22384C9700BAAB97 /* AppDelegate.swift in Sources */,
 				E2D2C98422384D0A00BAAB97 /* ChartViewController.swift in Sources */,
+				E23A949C223E6EF800056A2C /* LogicCanvas.swift in Sources */,
 				B34B9164223A91D2001490C8 /* TextHandler.swift in Sources */,
 				B38687C82239243D00E51BE1 /* Models.swift in Sources */,
 				B38687DB223969F700E51BE1 /* UIColor+z42.swift in Sources */,
+				E23A94A0223EC8A600056A2C /* CollectionVC2.swift in Sources */,
 				B347D164223D466F006179D8 /* ShapeView.swift in Sources */,
 				B3C5157B223C1CAA00E56CAE /* ChartTileLayer.swift in Sources */,
+				E29F9A30223DB0630039C1D7 /* ScrollController.swift in Sources */,
+				E23A949E223EC82000056A2C /* ChartTileCell.swift in Sources */,
 				E29F9A2E223986260039C1D7 /* ChartView.swift in Sources */,
 				B347D166223D5011006179D8 /* ZoomVC.swift in Sources */,
 				B347D162223D4033006179D8 /* TestModels.swift in Sources */,

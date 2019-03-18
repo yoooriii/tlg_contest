@@ -1,5 +1,5 @@
 //
-//  CollectionVC.swift
+//  CollectionVC2.swift
 //  TelegramChart
 //
 //  Created by Leonid Lokhmatov on 3/15/19.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CollectionVC: UIViewController {
+class CollectionVC2: UIViewController {
     @IBOutlet var collectionView: UICollectionView!
     @IBOutlet var sliderPosition: UISlider!
     @IBOutlet var sliderZoom: UISlider!
@@ -18,7 +18,6 @@ class CollectionVC: UIViewController {
     var scrollController: ScrollController!
 
 
-    var plane3d:Plane3d?
     var planeIndex = -1
     var graphicsContainer:GraphicsContainer? {
         didSet {
@@ -29,6 +28,7 @@ class CollectionVC: UIViewController {
     let tileWidth = CGFloat(128)
     let contentWidth = CGFloat(3000)
     let lineWidth = CGFloat(5.0)
+    private var logicCanvas: LogicCanvas?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,7 +43,6 @@ class CollectionVC: UIViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-
         showNextPlane()
     }
 
@@ -66,48 +65,44 @@ class CollectionVC: UIViewController {
     private func sliderChange(position:CGFloat, zoom:CGFloat) {
         self.chartZoom = zoom * 2.5 + 0.5
         print("on slider change: \(Int(position * 100.0)) : \(Int(zoom * 100.0))")
-
-//        let offset = CGPoint(x:2000.0*position, y:0)
-//        collectionView.setContentOffset(offset, animated: false)
-
-        updateZoomInTiles()
+   //     updateZoomInTiles()
     }
 
     var chartZoom = CGFloat(1)
-    private func updateZoomInTiles() {
-        guard let planes = plane3d?.planes else {
-            // no data models, nothing to show
-            return
-        }
-
-        let cells = collectionView.visibleCells
-        for cell in cells {
-            let tc = cell as UICollectionReusableView
-            if let tileCell = tc as? ChartTileCell {
-                let indexPath = collectionView.indexPath(for: cell)
-                let ix = CGFloat(indexPath!.item)
-                let offsetX = ix * tileWidth
-//                print("idx: \(ix, offsetX)")
-
-                let MASTER_SIZE = CGSize(width:1000, height:1000)
-                let height = collectionView.frame.height - 2.0
-                let tt0 = CGAffineTransform(scaleX: contentWidth/MASTER_SIZE.width, y: height/MASTER_SIZE.height * chartZoom)
-                let tt4 = CGAffineTransform(translationX: -offsetX, y: 0)
-                var tt3 = tt0.concatenating(tt4)
-
-                var pathModels = [PathModel]()
-                for p2d in planes {
-                    let masterPath = p2d.path!
-                    let tilePath = masterPath.copy(using:&tt3)
-                    let pm = PathModel(path:tilePath, color:p2d.color ?? UIColor.black, lineWidth:lineWidth)
-                    pathModels.append(pm)
-                }
-                tileCell.setPathModels(pathModels)
-            } else {
-                print("wrong cell class \(cell)")
-            }
-        }
-    }
+//    private func updateZoomInTiles() {
+//        guard let planes = plane3d?.planes else {
+//            // no data models, nothing to show
+//            return
+//        }
+//
+//        let cells = collectionView.visibleCells
+//        for cell in cells {
+//            let tc = cell as UICollectionReusableView
+//            if let tileCell = tc as? ChartTileCell {
+//                let indexPath = collectionView.indexPath(for: cell)
+//                let ix = CGFloat(indexPath!.item)
+//                let offsetX = ix * tileWidth
+////                print("idx: \(ix, offsetX)")
+//
+//                let MASTER_SIZE = CGSize(width:1000, height:1000)
+//                let height = collectionView.frame.height - 2.0
+//                let tt0 = CGAffineTransform(scaleX: contentWidth/MASTER_SIZE.width, y: height/MASTER_SIZE.height * chartZoom)
+//                let tt4 = CGAffineTransform(translationX: -offsetX, y: 0)
+//                var tt3 = tt0.concatenating(tt4)
+//
+//                var pathModels = [PathModel]()
+//                for p2d in planes {
+//                    let masterPath = p2d.path!
+//                    let tilePath = masterPath.copy(using:&tt3)
+//                    let pm = PathModel(path:tilePath, color:p2d.color ?? UIColor.black, lineWidth:lineWidth)
+//                    pathModels.append(pm)
+//                }
+//                tileCell.setPathModels(pathModels)
+//            } else {
+//                print("wrong cell class \(cell)")
+//            }
+//        }
+//    }
 
     private func showNextPlane() {
         showPlane(index: planeIndex)
@@ -139,32 +134,20 @@ class CollectionVC: UIViewController {
 
         var infoTxt = "#[\(index):\(container.planes.count)]: "
         let plane = container.planes[index]
-        // convert plane to Plane3d
-        // debug size & origin
-        let bounds = CGRect(x:0, y:0, width:1000, height:1000)
-        var arrP2d = [Plane2d]()
-        for amp in plane.vAmplitudes {
-            var p2d = Plane2d(vTime: plane.vTime, vAmplitude:amp)
-            p2d.color = amp.color
-            p2d.bounds = bounds
-            p2d.path = p2d.pathInRect(bounds)
-            arrP2d.append(p2d)
 
-            infoTxt += "\(amp.values.count) "
-        }
-        let p3d = Plane3d(planes:arrP2d)
-        setPlane3d(p3d)
+
+        // new logic canvas
+        logicCanvas = LogicCanvas(plane: plane)
+        let height = collectionView.frame.height - 5
+        logicCanvas?.boundingBox = CGRect(x:0, y:0, width:tileWidth, height:height)
+        let p3d = logicCanvas!.createPlane3d()
         scrollController.setPlane3d(p3d)
         infoLabel.text = infoTxt
-    }
-
-    private func setPlane3d(_ p3d:Plane3d) {
-        plane3d = p3d
         collectionView.reloadData()
     }
 }
 
-extension CollectionVC: UICollectionViewDataSource {
+extension CollectionVC2: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return Int(ceil(contentWidth/tileWidth))
     }
@@ -180,37 +163,27 @@ extension CollectionVC: UICollectionViewDataSource {
         tileCell.titleLabel?.text = "\(indexPath.section):\(indexPath.item)"
         tileCell.titleLabel?.layer.isGeometryFlipped = true
 
-        guard let planes = plane3d?.planes else {
+        guard let canvas = logicCanvas else {
             // no data models, nothing to show
             return cell
         }
 
-        let ix = CGFloat(indexPath.item)
-        let offsetX = ix * tileWidth
-//        print("idx: \(ix, offsetX)")
+        let SIZE = CGFloat(1000)
+        let scale = SIZE / contentWidth
+        let offsetX = tileWidth * CGFloat(indexPath.item)
+        let vRange = VectorRange(position: offsetX * scale, length: tileWidth * scale)
 
-        let MASTER_SIZE = CGSize(width:1000, height:1000)
-        let height = collectionView.frame.height - 2.0
-        let tt0 = CGAffineTransform(scaleX: contentWidth/MASTER_SIZE.width, y: height/MASTER_SIZE.height * chartZoom)
-        let tt4 = CGAffineTransform(translationX: -offsetX, y: 0)
-        var tt3 = tt0.concatenating(tt4)
-
-        var pathModels = [PathModel]()
-        for p2d in planes {
-            let masterPath = p2d.path!
-            let tilePath = masterPath.copy(using:&tt3)
-            let pm = PathModel(path:tilePath, color:p2d.color ?? UIColor.black, lineWidth:lineWidth)
-            pathModels.append(pm)
+        let slice = canvas.slice(at: vRange)
+        if let slice = slice {
+            tileCell.setPathModels(slice.pathModels)
+        } else {
+            tileCell.setPathModels(nil)
         }
-        tileCell.setPathModels(pathModels)
-
         return cell
     }
-
-
 }
 
-extension CollectionVC: UICollectionViewDelegate {
+extension CollectionVC2: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         if let tileCell = cell as? ChartTileCell {
             if let xtrY = tileCell.getExtremumY() {
@@ -220,7 +193,7 @@ extension CollectionVC: UICollectionViewDelegate {
     }
 }
 
-extension CollectionVC: UIScrollViewDelegate {
+extension CollectionVC2: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         // update slider from scroll
         let pt = scrollView.contentOffset
@@ -234,7 +207,7 @@ extension CollectionVC: UIScrollViewDelegate {
     }
 }
 
-extension CollectionVC: ScrollControllerDelegate {
+extension CollectionVC2: ScrollControllerDelegate {
     func scrollControllerDidScroll(_ scrollController: ScrollController, range: VectorRange) {
         print("scroll range: \(Int(range.position)):\(Int(range.length))")
     }
@@ -244,6 +217,4 @@ extension CollectionVC: ScrollControllerDelegate {
         let offset = CGPoint(x:www * value, y:0)
         collectionView.setContentOffset(offset, animated: false)
     }
-
-
 }

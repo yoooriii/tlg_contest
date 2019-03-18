@@ -329,10 +329,11 @@ class ChartViewController: UIViewController {
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        print("prepare(for segue: \(sender)")
-
         if segue.identifier == "kCollection" {
             if let vc = segue.destination as? CollectionVC {
+                vc.graphicsContainer = self.graphicsContainer
+            }
+            else if let vc = segue.destination as? CollectionVC2 {
                 vc.graphicsContainer = self.graphicsContainer
             }
         }

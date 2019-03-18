@@ -7,6 +7,7 @@
 //
 
 import Foundation
+//import CoreGraphics
 
 /// models convenient for ios/macOS internal logic (when raw json models aren't)
 /// no UIKit classes available here since the models supposed to work on macOS as well
@@ -17,8 +18,6 @@ protocol Vector {
     var values: [Int64]! {get set}
     var minValue: Int64 {get set}
     var maxValue: Int64 {get set}
-
-    init(_ rawColumn:RawColumn)
 }
 
 class BasicVector: Vector {
@@ -26,12 +25,30 @@ class BasicVector: Vector {
     var values: [Int64]!
     var minValue: Int64
     var maxValue: Int64
+    let normal: Double!
+    let scale: Double!
 
-    required init(_ rawColumn:RawColumn) {
+    required init(_ rawColumn:RawColumn, normal:Double) {
         id = rawColumn.id
         values = rawColumn.values
         minValue = rawColumn.minValue!
         maxValue = rawColumn.maxValue!
+
+        self.normal = normal
+        scale = Double(maxValue - minValue) / normal
+    }
+
+    func toNormal(_ originalValue:Int64) -> Double {
+        return Double(originalValue - minValue)/scale
+    }
+
+    func normalValue(at index:Int) -> Double {
+        let originalValue = values[index]
+        return Double(originalValue - minValue)/scale
+    }
+
+    func fromNormal(_ normalizedValue:Double) -> Int64 {
+        return Int64(normalizedValue * scale) + minValue
     }
 }
 
@@ -44,8 +61,8 @@ class VectorAmplitude: BasicVector {
     var name: String!
     var colorString: String!
 
-    convenience init(_ rawColumn:RawColumn, colorString: String!, name: String!) {
-        self.init(rawColumn)
+    convenience init(_ rawColumn:RawColumn, colorString: String!, name: String!, normal:Double) {
+        self.init(rawColumn, normal:normal)
         self.colorString = colorString
         self.name = name
     }
@@ -63,7 +80,7 @@ class Plane {
     // key: VectorAmplitude.name; value: @localizedName
     var localizedNames: [String:String]?
 
-    init(rawPlane:RawPlane) {
+    init(rawPlane:RawPlane, normal:Double) {
         var amplitudes = [VectorAmplitude]()
         for aColumn in rawPlane.columns {
             // simple validation logic to prevent using invalid vectors
@@ -74,12 +91,12 @@ class Plane {
             switch type {
             case .x:
                 // FIXIT: what if there is more than one x type item?
-                vTime = VectorTime(aColumn)
+                vTime = VectorTime(aColumn, normal:normal)
 
             case .line:
                 let color = rawPlane.colors[id]
                 let name = rawPlane.names[id]
-                let amp = VectorAmplitude(aColumn, colorString:color, name:name)
+                let amp = VectorAmplitude(aColumn, colorString:color, name:name, normal:normal)
                 amplitudes.append(amp)
             }
         }
@@ -90,13 +107,14 @@ class Plane {
 struct GraphicsContainer: Decodable {
     let planes: [Plane]!
     var size:Int { get { return planes.count }}
+    static var normal = Double(1000)
 
     init(from decoder: Decoder) throws {
         var rawItems = try decoder.unkeyedContainer()
         var planes = [Plane]()
         while !rawItems.isAtEnd {
             let rawPlane = try rawItems.decode(RawPlane.self)
-            let plane = Plane(rawPlane:rawPlane)
+            let plane = Plane(rawPlane:rawPlane, normal:GraphicsContainer.normal)
             planes.append(plane)
         }
         self.planes = planes

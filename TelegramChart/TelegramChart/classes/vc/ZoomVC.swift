@@ -19,17 +19,20 @@ class ZoomVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        if let shapeLayer = shapeView.shapeLayer {
-            let path = TestModels.path256Circle()
-            shapeLayer.path = path
-            shapeLayer.lineWidth = 5
-            shapeLayer.strokeColor = UIColor.red.cgColor
-            shapeLayer.backgroundColor = UIColor.black.cgColor
-            shapeLayer.fillColor = UIColor.clear.cgColor
-        } else {
+        guard let shapeLayer = shapeView.shapeLayer else {
             print("no shape layer")
+            return
         }
 
+        let path = TestModels.path256Circle()
+        shapeLayer.path = path
+        shapeLayer.lineWidth = 5
+        shapeLayer.strokeColor = UIColor.red.cgColor
+        shapeLayer.backgroundColor = UIColor.clear.cgColor
+        shapeLayer.fillColor = UIColor.clear.cgColor
+        shapeLayer.borderColor = UIColor.blue.cgColor
+        shapeLayer.borderWidth = 1.0
+        shapeLayer.anchorPoint = CGPoint(x:0.5, y:1.0)
     }
 
     @IBAction func sliderChangeActionX(_ sender: UISlider) {
@@ -61,3 +64,4 @@ class ZoomVC: UIViewController {
 
 
 }
+
