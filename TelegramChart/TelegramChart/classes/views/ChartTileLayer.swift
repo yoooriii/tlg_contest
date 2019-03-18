@@ -8,14 +8,30 @@
 
 import UIKit
 
-struct Slice {
-    let pathModels:[PathModel]!
+class Slice: NSObject {
+    var pathModels:[PathModel]!
+
+    init(pathModels:[PathModel]!) {
+        super.init()
+        self.pathModels = pathModels
+    }
 }
 
 struct PathModel {
     let path: CGPath!
     let color: UIColor
     let lineWidth: CGFloat
+
+    let min:Int64
+    let max:Int64
+
+    init(path: CGPath!, color: UIColor, lineWidth: CGFloat, min:Int64=0, max:Int64=0) {
+        self.path = path
+        self.color = color
+        self.lineWidth = lineWidth
+        self.min = min
+        self.max = max
+    }
 }
 
 class ChartTileLayer: CALayer {

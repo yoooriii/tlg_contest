@@ -193,18 +193,47 @@ extension CollectionVC2: UICollectionViewDataSource {
             return cell
         }
 
-        tileCell.slice = canvas.slice(at:indexPath.item)
+        tileCell.slice = canvas.getSlice(at:indexPath.item)
         return cell
     }
 }
 
 extension CollectionVC2: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        if let tileCell = cell as? ChartTileCell {
-            if let xtrY = tileCell.getExtremumY() {
-                print("xtremum at \(indexPath.item): \(xtrY)")
-            }
+
+        let indices = collectionView.indexPathsForVisibleItems
+        var yy = Set(indices)
+        yy.insert(indexPath)
+        let mmm = yy.map { (ip) -> Int in
+            return ip.item
         }
+
+        if let logicCanvas = logicCanvas {
+            if let xtrm = logicCanvas.getExtremum(mmm) {
+
+                let offsetY = -logicCanvas.pointsFrom(normalY: xtrm.min)
+                let zoom = 1000.0/(xtrm.max - xtrm.min)
+
+                print("current xtrm: [\(Int(xtrm.min)):\(Int(xtrm.max))]; offs:\(offsetY); zoom:\(zoom)")
+
+                for ip in yy {
+                    if let cell = collectionView.cellForItem(at: ip) as? ChartTileCell {
+                        cell.setVertical(zoom: zoom, offset: offsetY)
+                    }
+                }
+            } else {
+                print("no xtrm")
+            }
+
+
+        }
+
+
+//        if let tileCell = cell as? ChartTileCell {
+//            if let xtrY = tileCell.getExtremumY() {
+//                print("xtremum at \(indexPath.item): \(xtrY)")
+//            }
+//        }
     }
 }
 

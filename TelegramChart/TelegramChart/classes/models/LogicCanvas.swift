@@ -18,20 +18,27 @@ class LogicCanvas {
     var lineWidth = CGFloat(2)
     var viewSize = CGSize(width:100, height:100) {
         didSet {
+            // update the scale value once the view size change
             scale = CGPoint(x:LogicCanvas.SIZE / viewSize.width, y:LogicCanvas.SIZE / viewSize.height)
+            // changing the view size makes all cached slices invalid
+            cachedSlices.removeAllObjects()
         }
     }
     var tileRect = CGRect(x:0, y:0, width:100, height:100)
     private var scale = CGPoint(x:1.0, y:1.0)
 
-    var vTime: VectorTime!
+    func pointsFrom(normalY: CGFloat) -> CGFloat {
+        return normalY / scale.y
+    }
+
+    private var vTime: VectorTime!
     var count:Int { get { return vTime.values.count } }
 
-    var vAmplitudes: [VectorAmplitude]!
+    private var vAmplitudes: [VectorAmplitude]!
     //TODO: think: if one of amplitudes goes hidden, should we amp's min/max/scale update?
-    var minAmplitude: Int64!
-    var maxAmplitude: Int64!
-    var scaleAmplitude: CGFloat!
+    private var minAmplitude: Int64!
+    private var maxAmplitude: Int64!
+    private var scaleAmplitude: CGFloat!
 
     struct Indices {
         let start:Int!
@@ -45,8 +52,23 @@ class LogicCanvas {
         scaleAmplitude = updateAmplitudes()
     }
 
+    private var cachedSlices = NSCache<NSString, Slice>()
+
+    // get cached slice or create a new one and cache it
+    func getSlice(at index:Int) -> Slice? {
+        let key = String(index) as NSString
+        if let slc = cachedSlices.object(forKey:key) {
+            return slc
+        }
+        if let slc = slice(at:index) {
+            cachedSlices.setObject(slc, forKey:key)
+            return slc
+        }
+        return nil
+    }
+
     // based on the @tileRect
-    func slice(at index:Int) -> Slice? {
+    private func slice(at index:Int) -> Slice? {
         // copy & move tile rect along the x axe
         var rect = self.tileRect
         rect.origin.x = rect.width * CGFloat(index)
@@ -55,7 +77,7 @@ class LogicCanvas {
 
     // rect in view (screen) coordinates
     // result is in view (screen) coordinates
-    func slice(rect:CGRect) -> Slice? {
+    private func slice(rect:CGRect) -> Slice? {
         let rangeX = MinMax(min: rect.minX * scale.x, max:rect.maxX * scale.x)
         guard let indiceRange = self.indiceRange(rangeX:rangeX) else { return nil }
         let indices = indiceRange.start...indiceRange.end
@@ -65,15 +87,21 @@ class LogicCanvas {
         let viewMinY = rect.minY * scale.y
         var pathModels = [PathModel]()
         for vAmp in vAmplitudes {
+            var minAmp = Int64.max
+            var maxAmp = Int64.min
             let path = CGMutablePath()
             var isFirst = true
             for idx in indices {
+                let arValue = vAmp.values[idx]
+                if minAmp > arValue { minAmp = arValue }
+                if maxAmp < arValue { maxAmp = arValue }
+
                 let ptX = (CGFloat(vTime.normalValue(at:idx)) - rangeX.min) / scale.x
-                let ampVal = self.normalizeAmplitude(vAmp.values[idx])
+                let ampVal = self.normalizeAmplitude(arValue)
                 let ptY = (ampVal - viewMinY) / scale.y
                 let pt = CGPoint(x:ptX, y:ptY)
 
-                if isFirst {    // the 1st point move() and the rest addLine()
+                if isFirst {  // rationale: the 1st point move() and the rest addLine()
                     isFirst = false
                     path.move(to: pt)
                     continue
@@ -82,10 +110,25 @@ class LogicCanvas {
                 path.addLine(to: pt)
             }
             let color = vAmp.color ?? UIColor.black
-            let pm = PathModel(path:path, color:color, lineWidth:lineWidth)
+            let pm = PathModel(path:path, color:color, lineWidth:lineWidth, min:minAmp, max:maxAmp)
             pathModels.append(pm)
         }
         return Slice(pathModels:pathModels)
+    }
+
+    func getExtremum(_ indices:[Int]) -> MinMax? {
+        var min = Int64.max
+        var max = Int64.min
+        for idx in indices {
+            if let pathModels = getSlice(at: idx)?.pathModels {
+                for pm in pathModels {
+                    if min > pm.min { min = pm.min }
+                    if max < pm.max { max = pm.max }
+                }
+            }
+        }
+        guard min < max else { return nil }
+        return MinMax(min:normalizeAmplitude(min), max:normalizeAmplitude(max))
     }
 
     // range in screen (view) coordinates
