@@ -16,8 +16,6 @@ class CollectionVC2: UIViewController {
 
     @IBOutlet var sliderCollectionView: UICollectionView!
     var scrollController: ScrollController!
-
-
     var planeIndex = -1
     var graphicsContainer:GraphicsContainer? {
         didSet {
@@ -26,7 +24,9 @@ class CollectionVC2: UIViewController {
             } else { planeIndex = -1 } }
     }
     let tileWidth = CGFloat(128)
+    // this is not exactly contentSize.width (usually it is a bit smaller in order to accept an integer number of tiles)
     let contentWidth = CGFloat(3000)
+    // chart line (stroke) width
     let lineWidth = CGFloat(5.0)
     private var logicCanvas: LogicCanvas?
 
@@ -136,10 +136,13 @@ class CollectionVC2: UIViewController {
         let plane = container.planes[index]
 
 
-        // new logic canvas
+        // new logic canvas, create and init
         logicCanvas = LogicCanvas(plane: plane)
-        let height = collectionView.frame.height - 5
-        logicCanvas?.boundingBox = CGRect(x:0, y:0, width:tileWidth, height:height)
+        logicCanvas!.lineWidth = self.lineWidth
+        let height = collectionView.frame.height - 5.0
+        logicCanvas!.viewSize = CGSize(width:contentWidth, height:height)
+        logicCanvas!.tileRect = CGRect(x:0, y:-2.0, width:tileWidth, height:height)
+
         let p3d = logicCanvas!.createPlane3d()
         scrollController.setPlane3d(p3d)
         infoLabel.text = infoTxt
@@ -168,14 +171,9 @@ extension CollectionVC2: UICollectionViewDataSource {
             return cell
         }
 
-        let SIZE = CGFloat(1000)
-        let scale = SIZE / contentWidth
-        let offsetX = tileWidth * CGFloat(indexPath.item)
-        let vRange = VectorRange(position: offsetX * scale, length: tileWidth * scale)
-
-        let slice = canvas.slice(at: vRange)
+        let slice = canvas.slice(at:indexPath.item)
         if let slice = slice {
-            tileCell.setPathModels(slice.pathModels)
+            tileCell.setPathModels(slice)
         } else {
             tileCell.setPathModels(nil)
         }

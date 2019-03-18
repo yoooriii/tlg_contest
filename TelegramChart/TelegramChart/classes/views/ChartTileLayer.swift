@@ -20,8 +20,9 @@ struct MinMax {
 }
 
 class ChartTileLayer: CALayer {
-    var contentLayers = [CAShapeLayer]()
-    let maxLayerCount = 5
+    private var contentLayers = [CAShapeLayer]()
+    private let maxLayerCount = 5
+    private var verticalZoom = CGFloat(1)
 
     override init() {
         super.init()
@@ -84,10 +85,15 @@ class ChartTileLayer: CALayer {
     }
 
     func clear() {
+        verticalZoom = CGFloat(1)
         for layer in contentLayers {
             layer.path = nil
             layer.isHidden = true
         }
+    }
+
+    func setVerticalZoom(_ zoom:CGFloat) {
+        verticalZoom = zoom
     }
 
     override func layoutSublayers() {
