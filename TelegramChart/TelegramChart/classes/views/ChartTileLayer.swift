@@ -61,8 +61,8 @@ class ChartTileLayer: CALayer {
             layer.fillColor = UIColor.clear.cgColor
             layer.lineWidth = 1.0
             layer.lineJoin = .round
+            layer.anchorPoint = CGPoint(x:0.0, y:0.0) //???
             //TODO: remove debug
-            layer.anchorPoint = CGPoint(x:0.5, y:1.0) //???
             layer.borderColor = UIColor.brown.cgColor
             layer.borderWidth = 1.0
         }
@@ -129,10 +129,10 @@ class ChartTileLayer: CALayer {
     }
 
     override func layoutSublayers() {
-        var rect = bounds
-        rect.origin.y = verticalOffset
+        let rect = bounds
         for layer in contentLayers {
-            layer.frame = rect
+            // notice: I use bounds instead of frame here (see: anchorPoint)
+            layer.bounds = rect
         }
     }
 }

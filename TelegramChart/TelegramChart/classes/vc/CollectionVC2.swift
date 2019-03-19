@@ -16,7 +16,8 @@ class CollectionVC2: UIViewController {
 
     @IBOutlet var sliderCollectionView: UICollectionView!
     var scrollController: ScrollController!
-    var planeIndex = -1
+    private var planeIndex = -1
+    var selectedIndex:Int { set { planeIndex = newValue } get { return planeIndex } }
     var graphicsContainer:GraphicsContainer? {
         didSet {
             if let graphicsContainer = graphicsContainer {
@@ -55,6 +56,15 @@ class CollectionVC2: UIViewController {
         print("back")
         dismiss(animated: true) {
             print("dismissed")
+        }
+    }
+
+    @IBAction func sliderWidthAction(_ sender: UISlider) {
+        let value = CGFloat(sender.value)
+        let vvv = 150.0 + (value - 0.8) * 130.0
+        let height = collectionView.frame.height - 10
+        if let flowLayout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
+            flowLayout.itemSize = CGSize(width:vvv, height:height)
         }
     }
 

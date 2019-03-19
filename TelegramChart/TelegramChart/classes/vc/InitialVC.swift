@@ -47,10 +47,12 @@ class ChartPreviewCell: UITableViewCell {
     }
 }
 
+
 class ChartInfoCell: UITableViewCell {
     static let id = "kChartInfoCell"
     @IBOutlet weak var infoLabel: UILabel!
 }
+
 
 class InitialVC: UIViewController {
     @IBOutlet weak var tableView:UITableView!
@@ -58,6 +60,7 @@ class InitialVC: UIViewController {
     let lineWidth = CGFloat(1)
     let cellPreviewHeight = CGFloat(100)
     let cellInfoHeight = CGFloat(40)
+    var selectedIndex = -1
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -121,6 +124,17 @@ class InitialVC: UIViewController {
             }
         }
     }
+
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        if segue.identifier == "kCollection" {
+//            if let vc = segue.destination as? CollectionVC {
+//                vc.graphicsContainer = self.graphicsContainer
+//            }
+//            else if let vc = segue.destination as? CollectionVC2 {
+//                vc.graphicsContainer = self.graphicsContainer
+//            }
+//        }
+//    }
 }
 
 extension InitialVC: UITableViewDelegate {
@@ -128,8 +142,18 @@ extension InitialVC: UITableViewDelegate {
         tableView.deselectRow(at: indexPath, animated: true)
 
         if let container = graphicsContainer, 0 == indexPath.section {
-            print("tap: \(indexPath.row)")
+            selectedIndex = indexPath.row
+
+            if let vc = self.storyboard?.instantiateViewController(withIdentifier: "kCollectionVC2") as? CollectionVC2 {
+                vc.graphicsContainer = container
+                vc.selectedIndex = selectedIndex
+                navigationController?.pushViewController(vc, animated: true)
+            }
+        } else {
+            selectedIndex = -1
         }
+
+        print("tap: \(selectedIndex)")
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
