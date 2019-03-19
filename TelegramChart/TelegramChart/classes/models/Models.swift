@@ -122,7 +122,7 @@ class Plane {
 
 struct GraphicsContainer: Decodable {
     let planes: [Plane]!
-    var size:Int { get { return planes.count }}
+    var size:Int { get { return planes.count } }
 
     init(from decoder: Decoder) throws {
         var rawItems = try decoder.unkeyedContainer()

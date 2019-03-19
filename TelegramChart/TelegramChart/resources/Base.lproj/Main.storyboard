@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="0HX-pc-dsR">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -10,6 +10,109 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--InitialVC-->
+        <scene sceneID="b9T-0G-qwh">
+            <objects>
+                <viewController id="b8h-IN-Ekl" customClass="InitialVC" customModule="TelegramChart" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="KLT-XG-BrD">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="CXj-ma-TxZ">
+                                <rect key="frame" x="0.0" y="64" width="375" height="553"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="kChartInfoCell" id="njb-wF-PO3" customClass="ChartInfoCell" customModule="TelegramChart" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="njb-wF-PO3" id="gMv-rE-sQK">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S9g-1f-Vn6">
+                                                    <rect key="frame" x="15" y="11" width="345" height="22"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="S9g-1f-Vn6" firstAttribute="leading" secondItem="gMv-rE-sQK" secondAttribute="leadingMargin" id="L7P-Se-lDC"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="S9g-1f-Vn6" secondAttribute="trailing" id="kZk-P6-E0t"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="S9g-1f-Vn6" secondAttribute="bottom" id="tIb-3f-djU"/>
+                                                <constraint firstItem="S9g-1f-Vn6" firstAttribute="top" secondItem="gMv-rE-sQK" secondAttribute="topMargin" id="vFr-77-04S"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="infoLabel" destination="S9g-1f-Vn6" id="qRq-Kh-W1i"/>
+                                        </connections>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="kChartPreviewCell" rowHeight="84" id="Jyd-11-GrM" customClass="ChartPreviewCell" customModule="TelegramChart" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="72" width="375" height="84"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Jyd-11-GrM" id="tes-Gh-ptL">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="83.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="info" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3ri-Mi-s3f">
+                                                    <rect key="frame" x="15" y="12" width="25.5" height="18"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="3ri-Mi-s3f" firstAttribute="leading" secondItem="tes-Gh-ptL" secondAttribute="leadingMargin" id="g8m-0c-bO1"/>
+                                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="3ri-Mi-s3f" secondAttribute="trailing" constant="20" symbolic="YES" id="nMz-hv-XKL"/>
+                                                <constraint firstItem="3ri-Mi-s3f" firstAttribute="top" secondItem="tes-Gh-ptL" secondAttribute="topMargin" constant="1" id="tSm-JS-1wd"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="titleLabel" destination="3ri-Mi-s3f" id="CiJ-5r-PcW"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="b8h-IN-Ekl" id="CXk-6Q-iF9"/>
+                                    <outlet property="delegate" destination="b8h-IN-Ekl" id="HDg-cC-jiF"/>
+                                </connections>
+                            </tableView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4gb-8w-6NK">
+                                <rect key="frame" x="0.0" y="625" width="375" height="44"/>
+                                <color key="backgroundColor" red="0.30192451980000001" green="0.3744476933" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="peN-OK-Kis"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                <state key="normal" title="Debug">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <state key="highlighted" title="So what?">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="0qj-sO-WBm" firstAttribute="trailing" secondItem="4gb-8w-6NK" secondAttribute="trailing" id="8yF-ts-woJ"/>
+                            <constraint firstItem="0qj-sO-WBm" firstAttribute="bottom" secondItem="CXj-ma-TxZ" secondAttribute="bottom" constant="50" id="OB4-z4-r8u"/>
+                            <constraint firstItem="CXj-ma-TxZ" firstAttribute="leading" secondItem="0qj-sO-WBm" secondAttribute="leading" id="Pk7-pv-3tZ"/>
+                            <constraint firstItem="4gb-8w-6NK" firstAttribute="bottom" secondItem="0qj-sO-WBm" secondAttribute="bottom" constant="2" id="dNV-nu-WxF"/>
+                            <constraint firstItem="0qj-sO-WBm" firstAttribute="trailing" secondItem="CXj-ma-TxZ" secondAttribute="trailing" id="ud9-jy-wao"/>
+                            <constraint firstItem="4gb-8w-6NK" firstAttribute="leading" secondItem="0qj-sO-WBm" secondAttribute="leading" id="v1z-jv-APG"/>
+                            <constraint firstItem="CXj-ma-TxZ" firstAttribute="top" secondItem="0qj-sO-WBm" secondAttribute="top" id="vbw-fG-S9j"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="0qj-sO-WBm"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="HU6-G2-LPM"/>
+                    <connections>
+                        <outlet property="tableView" destination="CXj-ma-TxZ" id="ls2-4b-aTV"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="HUh-SR-Jnb" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="431.19999999999999" y="178.56071964017991"/>
+        </scene>
         <!--Chart View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
@@ -242,7 +345,7 @@
                     </connections>
                 </panGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="140" y="132.68365817091455"/>
+            <point key="canvasLocation" x="1079.2" y="132.68365817091455"/>
         </scene>
         <!--Collection VC-->
         <scene sceneID="Hr0-hg-Ixc">
@@ -444,7 +547,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="P53-CM-C6C" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="882.39999999999998" y="132.68365817091455"/>
+            <point key="canvasLocation" x="1821.5999999999999" y="132.68365817091455"/>
         </scene>
         <!--ZoomVC-->
         <scene sceneID="DAj-ev-UWa">
@@ -543,7 +646,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UAs-1D-Lm6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1556" y="135.38230884557723"/>
+            <point key="canvasLocation" x="2495.1999999999998" y="135.38230884557723"/>
         </scene>
         <!--Collection VC-->
         <scene sceneID="Fjs-OO-Qvh">
@@ -746,6 +849,24 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7gM-Lg-MgV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="882" y="839"/>
+        </scene>
+        <!--Telegram Charts-->
+        <scene sceneID="WaV-pS-JhX">
+            <objects>
+                <navigationController title="Telegram Charts" automaticallyAdjustsScrollViewInsets="NO" id="0HX-pc-dsR" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="jns-g2-6u1">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="b8h-IN-Ekl" kind="relationship" relationship="rootViewController" id="2qa-aN-KTA"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="kKr-3O-Xh8" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-508" y="178.56071964017991"/>
         </scene>
     </scenes>
     <resources>

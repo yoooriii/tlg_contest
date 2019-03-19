@@ -130,7 +130,7 @@ class CollectionVC2: UIViewController {
         showPlane(index: planeIndex)
         planeIndex += 1
         if let container = graphicsContainer {
-            let plCount = container.planes.count
+            let plCount = container.size
             if planeIndex >= plCount {
                 planeIndex = 0
             }
@@ -147,7 +147,7 @@ class CollectionVC2: UIViewController {
             return
         }
 
-        let plCount = container.planes.count
+        let plCount = container.size
         if index < 0 || index >= plCount {
             print("wrong index \(index)")
             infoLabel.text = "wrong index \(index)"

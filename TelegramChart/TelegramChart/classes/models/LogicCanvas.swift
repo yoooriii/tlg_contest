@@ -77,7 +77,7 @@ class LogicCanvas {
 
     // rect in view (screen) coordinates
     // result is in view (screen) coordinates
-    private func slice(rect:CGRect) -> Slice? {
+    func slice(rect:CGRect) -> Slice? {
         let rangeX = MinMax(min: rect.minX * scale.x, max:rect.maxX * scale.x)
         guard let indiceRange = self.indiceRange(rangeX:rangeX) else { return nil }
         let indices = indiceRange.start...indiceRange.end

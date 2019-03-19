@@ -28,6 +28,7 @@ class ChartTileCell: UICollectionViewCell /* UICollectionReusableView */ {
 
     override func prepareForReuse() {
         tileLayer?.clear()
+        titleLabel?.text = ""
     }
 
     func setPathModels(_ paths:[PathModel]?) {
