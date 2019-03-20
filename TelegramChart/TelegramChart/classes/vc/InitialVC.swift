@@ -8,46 +8,6 @@
 
 import UIKit
 
-class ChartPreviewCell: UITableViewCell {
-    static let id = "kChartPreviewCell"
-
-    var slice:Slice? {
-        didSet { updateSlice() }
-    }
-
-    override class var layerClass: AnyClass { return ChartTileLayer.self }
-
-    @IBOutlet var titleLabel: UILabel?
-
-    var tileLayer: ChartTileLayer? {
-        get { return layer as? ChartTileLayer }
-    }
-
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        titleLabel?.layer.isGeometryFlipped = true
-    }
-
-    override func prepareForReuse() {
-        tileLayer?.clear()
-        titleLabel?.text = ""
-    }
-
-    func setPathModels(_ paths:[PathModel]?) {
-        tileLayer?.setPathModels(paths)
-    }
-
-    private func updateSlice() {
-        guard let tileLayer = self.tileLayer else { return }
-        if let slice = self.slice {
-            tileLayer.setPathModels(slice.pathModels)
-        } else {
-            tileLayer.clear()
-        }
-    }
-}
-
-
 class ChartInfoCell: UITableViewCell {
     static let id = "kChartInfoCell"
     @IBOutlet weak var infoLabel: UILabel!
@@ -141,18 +101,13 @@ extension InitialVC: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
 
-        if let container = graphicsContainer, 0 == indexPath.section {
-            selectedIndex = indexPath.row
-
-            if let vc = self.storyboard?.instantiateViewController(withIdentifier: "kCollectionVC2") as? CollectionVC2 {
-                vc.graphicsContainer = container
-                vc.selectedIndex = selectedIndex
-                navigationController?.pushViewController(vc, animated: true)
-            }
-        } else {
+        guard 0 == indexPath.section else {
             selectedIndex = -1
+            return
         }
 
+        selectedIndex = indexPath.row
+        showPreview2()
         print("tap: \(selectedIndex)")
     }
 
@@ -161,6 +116,24 @@ extension InitialVC: UITableViewDelegate {
             return cellPreviewHeight
         }
         return cellInfoHeight
+    }
+
+    private func showPreview1() {
+        guard let container = graphicsContainer else { return }
+        if let vc = self.storyboard?.instantiateViewController(withIdentifier: "kCollectionVC2") as? CollectionVC2 {
+            vc.graphicsContainer = container
+            vc.selectedIndex = selectedIndex
+            navigationController?.pushViewController(vc, animated: true)
+        }
+    }
+
+    private func showPreview2() {
+        guard let container = graphicsContainer else { return }
+        if let vc = self.storyboard?.instantiateViewController(withIdentifier: "kChartPreviewVC") as? ChartPreviewVC {
+            vc.graphicsContainer = container
+            vc.selectedIndex = selectedIndex
+            navigationController?.pushViewController(vc, animated: true)
+        }
     }
 }
 
@@ -204,23 +177,24 @@ extension InitialVC: UITableViewDataSource {
     }
 
     private func configPreviewCell(_ cell:ChartPreviewCell, index:Int) {
-        if let container = graphicsContainer {
-            let plane = container.planes[index]
-            // new logic canvas, create and init
-            let logicCanvas = LogicCanvas(plane: plane)
-            logicCanvas.lineWidth = lineWidth
-            let contentWidth = tableView.frame.width - 10
-            let rect = CGRect(x:0, y:0, width:contentWidth, height:cellPreviewHeight)
-            logicCanvas.viewSize = rect.size
-            let slice = logicCanvas.slice(rect:rect)
-//            let p3d = logicCanvas.createPlane3d()
-            cell.slice = slice
-            // debug info
-            if let slice = slice {
-                cell.titleLabel?.text = "\(slice.pathModels.count)"
-            } else {
-                cell.titleLabel?.text = "?"
-            }
+        guard let container = graphicsContainer else { return }
+
+        let plane = container.planes[index]
+        // new logic canvas, create and init
+        let logicCanvas = LogicCanvas(plane: plane)
+        logicCanvas.lineWidth = lineWidth
+        let contentWidth = tableView.frame.width - 10
+        let rect = CGRect(x:0, y:0, width:contentWidth, height:cellPreviewHeight)
+        logicCanvas.viewSize = rect.size
+        let slice = logicCanvas.slice(rect:rect)
+        //            let p3d = logicCanvas.createPlane3d()
+        cell.slice = slice
+
+        // debug info
+        if let slice = slice {
+            cell.titleLabel?.text = "\(slice.pathModels.count)"
+        } else {
+            cell.titleLabel?.text = "?"
         }
     }
 }

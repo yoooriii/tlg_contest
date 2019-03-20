@@ -24,7 +24,7 @@ class ZoomVC: UIViewController {
             return
         }
 
-        let path = TestModels.path256Circle()
+        let path = TestModels.pathCircle()
         shapeLayer.path = path
         shapeLayer.lineWidth = 5
         shapeLayer.strokeColor = UIColor.red.cgColor

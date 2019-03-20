@@ -20,6 +20,11 @@
 		B38687D42239292E00E51BE1 /* chart_data.json in Resources */ = {isa = PBXBuildFile; fileRef = B38687D32239292E00E51BE1 /* chart_data.json */; };
 		B38687D9223969D500E51BE1 /* Extentions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B38687D8223969D500E51BE1 /* Extentions.swift */; };
 		B38687DB223969F700E51BE1 /* UIColor+z42.swift in Sources */ = {isa = PBXBuildFile; fileRef = B38687DA223969F700E51BE1 /* UIColor+z42.swift */; };
+		B3A8E7C622422F5F001A691D /* ChartPreviewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3A8E7C522422F5F001A691D /* ChartPreviewCell.swift */; };
+		B3A8E7C822422FC4001A691D /* ChartPreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3A8E7C722422FC4001A691D /* ChartPreView.swift */; };
+		B3A8E7CA224236D0001A691D /* ChartPreviewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3A8E7C9224236D0001A691D /* ChartPreviewVC.swift */; };
+		B3A8E7CC224251FC001A691D /* PathModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3A8E7CB224251FC001A691D /* PathModels.swift */; };
+		B3A8E7CF224284C4001A691D /* ChartTiledView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3A8E7CE224284C4001A691D /* ChartTiledView.swift */; };
 		B3C51579223BF98400E56CAE /* CollectionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3C51578223BF98400E56CAE /* CollectionVC.swift */; };
 		B3C5157B223C1CAA00E56CAE /* ChartTileLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3C5157A223C1CAA00E56CAE /* ChartTileLayer.swift */; };
 		E23A949C223E6EF800056A2C /* LogicCanvas.swift in Sources */ = {isa = PBXBuildFile; fileRef = E23A949B223E6EF800056A2C /* LogicCanvas.swift */; };
@@ -50,6 +55,11 @@
 		B38687D32239292E00E51BE1 /* chart_data.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = chart_data.json; sourceTree = "<group>"; };
 		B38687D8223969D500E51BE1 /* Extentions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extentions.swift; sourceTree = "<group>"; };
 		B38687DA223969F700E51BE1 /* UIColor+z42.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+z42.swift"; sourceTree = "<group>"; };
+		B3A8E7C522422F5F001A691D /* ChartPreviewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartPreviewCell.swift; sourceTree = "<group>"; };
+		B3A8E7C722422FC4001A691D /* ChartPreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartPreView.swift; sourceTree = "<group>"; };
+		B3A8E7C9224236D0001A691D /* ChartPreviewVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartPreviewVC.swift; sourceTree = "<group>"; };
+		B3A8E7CB224251FC001A691D /* PathModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PathModels.swift; sourceTree = "<group>"; };
+		B3A8E7CE224284C4001A691D /* ChartTiledView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartTiledView.swift; sourceTree = "<group>"; };
 		B3C51578223BF98400E56CAE /* CollectionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionVC.swift; sourceTree = "<group>"; };
 		B3C5157A223C1CAA00E56CAE /* ChartTileLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartTileLayer.swift; sourceTree = "<group>"; };
 		E23A949B223E6EF800056A2C /* LogicCanvas.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogicCanvas.swift; sourceTree = "<group>"; };
@@ -87,6 +97,7 @@
 				B34B915F223A4D86001490C8 /* UIModels.swift */,
 				B347D161223D4033006179D8 /* TestModels.swift */,
 				E23A949B223E6EF800056A2C /* LogicCanvas.swift */,
+				B3A8E7CB224251FC001A691D /* PathModels.swift */,
 			);
 			path = models;
 			sourceTree = "<group>";
@@ -116,6 +127,14 @@
 				E23A94A32240BC1800056A2C /* NSError+z42.swift */,
 			);
 			path = extensions;
+			sourceTree = "<group>";
+		};
+		B3A8E7CD2242849B001A691D /* tiles */ = {
+			isa = PBXGroup;
+			children = (
+				B3A8E7CE224284C4001A691D /* ChartTiledView.swift */,
+			);
+			path = tiles;
 			sourceTree = "<group>";
 		};
 		E2D2C95E22384C2300BAAB97 = {
@@ -168,6 +187,9 @@
 				E29F9A2F223DB0630039C1D7 /* ScrollController.swift */,
 				E23A949D223EC82000056A2C /* ChartTileCell.swift */,
 				E23A94A12240B7CC00056A2C /* InitialVC.swift */,
+				B3A8E7C522422F5F001A691D /* ChartPreviewCell.swift */,
+				B3A8E7C722422FC4001A691D /* ChartPreView.swift */,
+				B3A8E7C9224236D0001A691D /* ChartPreviewVC.swift */,
 			);
 			path = vc;
 			sourceTree = "<group>";
@@ -175,6 +197,7 @@
 		E2D2C98322384D0A00BAAB97 /* views */ = {
 			isa = PBXGroup;
 			children = (
+				B3A8E7CD2242849B001A691D /* tiles */,
 				E2D2C98522384D6800BAAB97 /* ScaleSliderView.swift */,
 				E2D2C9872238590300BAAB97 /* SliderBackgroundView.swift */,
 				E29F9A2D223986260039C1D7 /* ChartView.swift */,
@@ -263,14 +286,19 @@
 				E2D2C98422384D0A00BAAB97 /* ChartViewController.swift in Sources */,
 				E23A949C223E6EF800056A2C /* LogicCanvas.swift in Sources */,
 				B34B9164223A91D2001490C8 /* TextHandler.swift in Sources */,
+				B3A8E7C622422F5F001A691D /* ChartPreviewCell.swift in Sources */,
 				B38687C82239243D00E51BE1 /* Models.swift in Sources */,
 				B38687DB223969F700E51BE1 /* UIColor+z42.swift in Sources */,
 				E23A94A22240B7CC00056A2C /* InitialVC.swift in Sources */,
+				B3A8E7CC224251FC001A691D /* PathModels.swift in Sources */,
 				E23A94A0223EC8A600056A2C /* CollectionVC2.swift in Sources */,
+				B3A8E7CA224236D0001A691D /* ChartPreviewVC.swift in Sources */,
 				B347D164223D466F006179D8 /* ShapeView.swift in Sources */,
 				B3C5157B223C1CAA00E56CAE /* ChartTileLayer.swift in Sources */,
+				B3A8E7CF224284C4001A691D /* ChartTiledView.swift in Sources */,
 				E29F9A30223DB0630039C1D7 /* ScrollController.swift in Sources */,
 				E23A949E223EC82000056A2C /* ChartTileCell.swift in Sources */,
+				B3A8E7C822422FC4001A691D /* ChartPreView.swift in Sources */,
 				E29F9A2E223986260039C1D7 /* ChartView.swift in Sources */,
 				B347D166223D5011006179D8 /* ZoomVC.swift in Sources */,
 				B347D162223D4033006179D8 /* TestModels.swift in Sources */,

@@ -9,9 +9,8 @@
 import UIKit
 
 class TestModels {
-    static func path256Circle() -> CGPath {
+    static func pathCircle(SIDE:CGFloat = 256.0) -> CGPath {
         let iCount = 10
-        let SIDE = CGFloat(256)
         let SIDE2 = SIDE/2.0
         let R = SIDE * 0.2
         let itemRadius = SIDE * 0.28

@@ -40,11 +40,6 @@ class LogicCanvas {
     private var maxAmplitude: Int64!
     private var scaleAmplitude: CGFloat!
 
-    struct Indices {
-        let start:Int!
-        let end: Int!
-    }
-
     //TODO: decide what to keep Plane or Plane's properties
     init(plane:Plane) {
         vTime = plane.vTime
@@ -113,7 +108,7 @@ class LogicCanvas {
             let pm = PathModel(path:path, color:color, lineWidth:lineWidth, min:minAmp, max:maxAmp)
             pathModels.append(pm)
         }
-        return Slice(pathModels:pathModels)
+        return Slice(pathModels:pathModels, rect:rect, indices:indiceRange)
     }
 
     func getExtremum(_ indices:[Int]) -> MinMax? {
