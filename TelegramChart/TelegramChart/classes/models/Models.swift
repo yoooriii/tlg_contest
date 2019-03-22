@@ -34,6 +34,10 @@ struct Range {
     let origin: Double!
     let length: Double!
     var end:Double { get { return origin + length } }
+    init(origin:CGFloat, length:CGFloat) {
+        self.origin = Double(origin)
+        self.length = Double(length)
+    }
 }
 
 class BasicVector: Vector {

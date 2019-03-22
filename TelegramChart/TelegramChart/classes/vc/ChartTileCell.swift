@@ -44,10 +44,6 @@ class ChartTileCell: UICollectionViewCell /* UICollectionReusableView */ {
         }
     }
 
-    func getExtremumY() -> MinMax? {
-        return tileLayer?.getExtremumY()
-    }
-
     func setVertical(zoom:CGFloat, offset:CGFloat) {
         tileLayer?.setVertical(zoom:zoom, offset:offset)
     }

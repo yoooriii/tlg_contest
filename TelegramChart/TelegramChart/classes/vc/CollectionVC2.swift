@@ -30,16 +30,19 @@ class CollectionVC2: UIViewController {
     // chart line (stroke) width
     let lineWidth = CGFloat(5.0)
     private var logicCanvas: LogicCanvas?
+    private var lastUpdOffsetX = CGFloat(0)
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        if let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
-            layout.itemSize = CGSize(width:tileWidth, height:collectionView.frame.height)
-            print("layout: \(layout)")
-        }
-
         scrollController = ScrollController(collectionView:sliderCollectionView, delegate:self)
+    }
+
+    override func viewDidLayoutSubviews() {
+        updateCanvasSize()
+        if let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
+            layout.itemSize = CGSize(width:tileWidth, height:tileHeight())
+        }
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -59,12 +62,21 @@ class CollectionVC2: UIViewController {
         }
     }
 
+    private func scaleValue(_ val:Float, min:Float, max:Float) -> Float {
+        return min + val * (max-min)
+    }
+
+    // change horizontal scale and compensate the x offset
     @IBAction func sliderWidthAction(_ sender: UISlider) {
-        let value = CGFloat(sender.value)
-        let vvv = 150.0 + (value - 0.8) * 130.0
-        let height = collectionView.frame.height - 10
+        let value = scaleValue(sender.value, min: 0.2, max: 10.0)
+        let w2 = CGFloat(value)*tileWidth
+        let height = tileHeight()
+        var offset = collectionView.contentOffset
         if let flowLayout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
-            flowLayout.itemSize = CGSize(width:vvv, height:height)
+            let w1 = flowLayout.itemSize.width
+            flowLayout.itemSize = CGSize(width:w2, height:height)
+            offset.x = offset.x * w2 / w1
+            collectionView.contentOffset = offset
         }
     }
 
@@ -82,7 +94,6 @@ class CollectionVC2: UIViewController {
     private func sliderChange(position:CGFloat, zoom:CGFloat) {
         self.chartVerticalZoom = zoom * 2.5 + 0.5
         print("on slider change: \(Int(position * 100.0)) : \(Int(zoom * 100.0))")
-   //     updateZoomInTiles()
         updateZoom()
     }
 
@@ -98,43 +109,6 @@ class CollectionVC2: UIViewController {
             }
         }
     }
-
-
-
-//    private func updateZoomInTiles() {
-//        guard let planes = plane3d?.planes else {
-//            // no data models, nothing to show
-//            return
-//        }
-//
-//        let cells = collectionView.visibleCells
-//        for cell in cells {
-//            let tc = cell as UICollectionReusableView
-//            if let tileCell = tc as? ChartTileCell {
-//                let indexPath = collectionView.indexPath(for: cell)
-//                let ix = CGFloat(indexPath!.item)
-//                let offsetX = ix * tileWidth
-////                print("idx: \(ix, offsetX)")
-//
-//                let MASTER_SIZE = CGSize(width:1000, height:1000)
-//                let height = collectionView.frame.height - 2.0
-//                let tt0 = CGAffineTransform(scaleX: contentWidth/MASTER_SIZE.width, y: height/MASTER_SIZE.height * chartVerticalZoom)
-//                let tt4 = CGAffineTransform(translationX: -offsetX, y: 0)
-//                var tt3 = tt0.concatenating(tt4)
-//
-//                var pathModels = [PathModel]()
-//                for p2d in planes {
-//                    let masterPath = p2d.path!
-//                    let tilePath = masterPath.copy(using:&tt3)
-//                    let pm = PathModel(path:tilePath, color:p2d.color ?? UIColor.black, lineWidth:lineWidth)
-//                    pathModels.append(pm)
-//                }
-//                tileCell.setPathModels(pathModels)
-//            } else {
-//                print("wrong cell class \(cell)")
-//            }
-//        }
-//    }
 
     private func showNextPlane() {
         showPlane(index: planeIndex)
@@ -171,15 +145,20 @@ class CollectionVC2: UIViewController {
         // new logic canvas, create and init
         logicCanvas = LogicCanvas(plane: plane)
         logicCanvas!.lineWidth = self.lineWidth
-        let height = collectionView.frame.height - 5.0
-        logicCanvas!.viewSize = CGSize(width:contentWidth, height:height)
-        logicCanvas!.tileRect = CGRect(x:0, y:-2.0, width:tileWidth, height:height)
+        updateCanvasSize()
 
         let p3d = logicCanvas!.createPlane3d()
         scrollController.setPlane3d(p3d)
         infoTxt += "; count:\(logicCanvas!.count)"
         infoLabel.text = infoTxt
         collectionView.reloadData()
+    }
+
+    private func updateCanvasSize() {
+        guard let logicCanvas = self.logicCanvas else { return }
+        let height = tileHeight()
+        logicCanvas.viewSize = CGSize(width:contentWidth, height:height)
+        logicCanvas.tileRect = CGRect(x:0, y:-2.0, width:tileWidth, height:height)
     }
 }
 
@@ -208,42 +187,9 @@ extension CollectionVC2: UICollectionViewDataSource {
     }
 }
 
+//TODO: dead code, remove it if not using
 extension CollectionVC2: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-
-        let indices = collectionView.indexPathsForVisibleItems
-        var yy = Set(indices)
-        yy.insert(indexPath)
-        let mmm = yy.map { (ip) -> Int in
-            return ip.item
-        }
-
-        if let logicCanvas = logicCanvas {
-            if let xtrm = logicCanvas.getExtremum(mmm) {
-
-                let offsetY = -logicCanvas.pointsFrom(normalY: xtrm.min)
-                let zoom = 1000.0/(xtrm.max - xtrm.min)
-
-                print("current xtrm: [\(Int(xtrm.min)):\(Int(xtrm.max))]; offs:\(offsetY); zoom:\(zoom)")
-
-                for ip in yy {
-                    if let cell = collectionView.cellForItem(at: ip) as? ChartTileCell {
-                        cell.setVertical(zoom: zoom, offset: offsetY)
-                    }
-                }
-            } else {
-                print("no xtrm")
-            }
-
-
-        }
-
-
-//        if let tileCell = cell as? ChartTileCell {
-//            if let xtrY = tileCell.getExtremumY() {
-//                print("xtremum at \(indexPath.item): \(xtrY)")
-//            }
-//        }
     }
 }
 
@@ -262,13 +208,62 @@ extension CollectionVC2: UIScrollViewDelegate {
 }
 
 extension CollectionVC2: ScrollControllerDelegate {
+    //TODO: dead code, remove it if not using
     func scrollControllerDidScroll(_ scrollController: ScrollController, range: VectorRange) {
-        print("scroll range: \(Int(range.position)):\(Int(range.length))")
+//        print("scroll range: \(Int(range.position)):\(Int(range.length)) - \(Int(collectionView.contentSize.width))")
     }
 
     func scrollControllerDidScroll(_ scrollController: ScrollController, value: CGFloat) {
         let www = collectionView.contentSize.width - collectionView.frame.width
         let offset = CGPoint(x:www * value, y:0)
         collectionView.setContentOffset(offset, animated: false)
+        updateOnScrollH()
+    }
+
+    private func updateOnScrollH() {
+        guard let logicCanvas = self.logicCanvas else {return}
+        let currTileWidth = currentTileWidth()
+        if currTileWidth < 1 { return }
+        let zoomH = currTileWidth/tileWidth
+        let contentWidth0 = collectionView.contentSize.width/zoomH
+        let logicScaleH = contentWidth0/LogicCanvas.SIZE
+        let multyScaleH = zoomH * logicScaleH
+        let widthMargin = tileWidth/2.0
+        var offsetX = collectionView.contentOffset.x/multyScaleH
+        let dx = abs(lastUpdOffsetX - offsetX)
+        if dx < 5 {
+            // do not update it every too often
+            return
+        }
+        lastUpdOffsetX = offsetX
+        offsetX -= widthMargin
+        if offsetX < 0.0 { offsetX = 0.0 }
+        var lengthW = collectionView.frame.width/multyScaleH
+        lengthW += 2.0*widthMargin
+        if (offsetX + lengthW) > LogicCanvas.SIZE { lengthW = LogicCanvas.SIZE - offsetX }
+        let range = Range(origin:offsetX, length:lengthW)
+        // MinMax?
+        if let minMax = logicCanvas.getLogicExtremum(in:range) {
+            let minMaxMaster = logicCanvas.getMinMax()
+            let prescaleVal = CGFloat(0.90) // upscale tiles if needed
+            let scaleH = prescaleVal * (minMaxMaster.max - minMaxMaster.min) / (minMax.max - minMax.min)
+            let translateH = -(minMax.min/scaleH) // move a tile downward
+            //FIXIT: not the best way to enumerate cells even though the trick makes its job
+            for v in collectionView.subviews {
+                if let cell = v as? ChartTileCell {
+                    cell.setVertical(zoom:scaleH, offset:translateH)
+                }
+            }
+        }
+    }
+
+    // currentTileWidth vs tileWidth = variable vs const
+    private func currentTileWidth() -> CGFloat {
+        guard let flowLayout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout else { return 0.0 }
+        return flowLayout.itemSize.width
+    }
+
+    private func tileHeight() -> CGFloat {
+        return collectionView.frame.height - 5.0
     }
 }

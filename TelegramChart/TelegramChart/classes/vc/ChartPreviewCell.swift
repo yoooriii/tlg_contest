@@ -19,9 +19,9 @@ class ChartPreviewCell: UITableViewCell {
 
     @IBOutlet var titleLabel: UILabel?
 
-    var tileLayer: ChartTileLayer? {
-        get { return layer as? ChartTileLayer }
-    }
+    lazy var tileLayer: ChartTileLayer? = {
+        { return self.layer as? ChartTileLayer }
+        }()()
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -40,6 +40,7 @@ class ChartPreviewCell: UITableViewCell {
     private func updateSlice() {
         guard let tileLayer = self.tileLayer else { return }
         if let slice = self.slice {
+            tileLayer.setTileWidth(bounds.width)
             tileLayer.setPathModels(slice.pathModels)
         } else {
             tileLayer.clear()

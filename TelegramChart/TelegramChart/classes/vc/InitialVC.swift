@@ -107,7 +107,7 @@ extension InitialVC: UITableViewDelegate {
         }
 
         selectedIndex = indexPath.row
-        showPreview2()
+        showPreview1()
         print("tap: \(selectedIndex)")
     }
 

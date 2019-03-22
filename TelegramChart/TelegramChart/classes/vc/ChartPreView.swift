@@ -19,9 +19,9 @@ class ChartPreView: UIView {
 
     @IBOutlet var titleLabel: UILabel?
 
-    var tileLayer: ChartTileLayer? {
-        get { return layer as? ChartTileLayer }
-    }
+    lazy var tileLayer: ChartTileLayer? = {
+        { return self.layer as? ChartTileLayer }
+        }()()
 
     override func awakeFromNib() {
         super.awakeFromNib()

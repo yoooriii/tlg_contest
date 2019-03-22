@@ -40,6 +40,11 @@ class LogicCanvas {
     private var maxAmplitude: Int64!
     private var scaleAmplitude: CGFloat!
 
+    // returns logic min & max amplitudes
+    func getMinMax() -> MinMax {
+        return MinMax(min:normalizeAmplitude(minAmplitude), max:normalizeAmplitude(maxAmplitude))
+    }
+
     //TODO: decide what to keep Plane or Plane's properties
     init(plane:Plane) {
         vTime = plane.vTime
@@ -134,6 +139,40 @@ class LogicCanvas {
         }
         // translate screen coord's --> logic coord's -> indices
         let rangeX = MinMax(min:CGFloat(range.origin) * scale.x, max:CGFloat(range.end) * scale.x)
+        guard let indiceRange = self.indiceRange(rangeX:rangeX) else { return nil }
+        let indices = indiceRange.start...indiceRange.end
+        print("SLICE: [\(indices)] from: \(count)")
+
+        var minValue = Int64.max
+        var maxValue = Int64.min
+
+        for amp in vAmplitudes {
+            for i in indices {
+                let val = amp.values[i]
+                if minValue > val {
+                    minValue = val
+                }
+                if maxValue < val {
+                    maxValue = val
+                }
+            }
+        }
+        if minValue > maxValue {
+            return nil
+        }
+
+        // translate real values into logic points
+        return MinMax(min:normalizeAmplitude(minValue), max:normalizeAmplitude(maxValue))
+    }
+
+    // input range in logic points
+    // the result extremun in logic points
+    func getLogicExtremum(in range:Range) -> MinMax? {
+        if count < 1 {
+            return nil
+        }
+        // translate screen coord's --> logic coord's -> indices
+        let rangeX = MinMax(min:CGFloat(range.origin), max:CGFloat(range.end))
         guard let indiceRange = self.indiceRange(rangeX:rangeX) else { return nil }
         let indices = indiceRange.start...indiceRange.end
         print("SLICE: [\(indices)] from: \(count)")

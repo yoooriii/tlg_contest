@@ -25,7 +25,6 @@
 		B3A8E7CA224236D0001A691D /* ChartPreviewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3A8E7C9224236D0001A691D /* ChartPreviewVC.swift */; };
 		B3A8E7CC224251FC001A691D /* PathModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3A8E7CB224251FC001A691D /* PathModels.swift */; };
 		B3A8E7CF224284C4001A691D /* ChartTiledView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3A8E7CE224284C4001A691D /* ChartTiledView.swift */; };
-		B3C51579223BF98400E56CAE /* CollectionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3C51578223BF98400E56CAE /* CollectionVC.swift */; };
 		B3C5157B223C1CAA00E56CAE /* ChartTileLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3C5157A223C1CAA00E56CAE /* ChartTileLayer.swift */; };
 		E23A949C223E6EF800056A2C /* LogicCanvas.swift in Sources */ = {isa = PBXBuildFile; fileRef = E23A949B223E6EF800056A2C /* LogicCanvas.swift */; };
 		E23A949E223EC82000056A2C /* ChartTileCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E23A949D223EC82000056A2C /* ChartTileCell.swift */; };
@@ -60,7 +59,6 @@
 		B3A8E7C9224236D0001A691D /* ChartPreviewVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartPreviewVC.swift; sourceTree = "<group>"; };
 		B3A8E7CB224251FC001A691D /* PathModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PathModels.swift; sourceTree = "<group>"; };
 		B3A8E7CE224284C4001A691D /* ChartTiledView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartTiledView.swift; sourceTree = "<group>"; };
-		B3C51578223BF98400E56CAE /* CollectionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionVC.swift; sourceTree = "<group>"; };
 		B3C5157A223C1CAA00E56CAE /* ChartTileLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartTileLayer.swift; sourceTree = "<group>"; };
 		E23A949B223E6EF800056A2C /* LogicCanvas.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogicCanvas.swift; sourceTree = "<group>"; };
 		E23A949D223EC82000056A2C /* ChartTileCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartTileCell.swift; sourceTree = "<group>"; };
@@ -180,7 +178,6 @@
 		E2D2C98122384D0A00BAAB97 /* vc */ = {
 			isa = PBXGroup;
 			children = (
-				B3C51578223BF98400E56CAE /* CollectionVC.swift */,
 				E23A949F223EC8A600056A2C /* CollectionVC2.swift */,
 				E2D2C98222384D0A00BAAB97 /* ChartViewController.swift */,
 				B347D165223D5011006179D8 /* ZoomVC.swift */,
@@ -307,7 +304,6 @@
 				B34B9160223A4D86001490C8 /* UIModels.swift in Sources */,
 				B38687C72239243D00E51BE1 /* RawModels.swift in Sources */,
 				E23A94A42240BC1800056A2C /* NSError+z42.swift in Sources */,
-				B3C51579223BF98400E56CAE /* CollectionVC.swift in Sources */,
 				B38687D9223969D500E51BE1 /* Extentions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
