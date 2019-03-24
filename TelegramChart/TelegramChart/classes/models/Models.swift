@@ -48,6 +48,10 @@ class BasicVector: Vector {
     let normal: Double!
     let scale: Double!
 
+    var count:Int {
+        return values.count
+    }
+
     required init(_ rawColumn:RawColumn, normal:Double) {
         id = rawColumn.id
         values = rawColumn.values

@@ -24,6 +24,7 @@ class CollectionVC2: UIViewController {
                 planeIndex = (graphicsContainer.planes.count > 0) ? 0 : -1
             } else { planeIndex = -1 } }
     }
+    // original tile width for horizontal scale factor 1.0
     let tileWidth = CGFloat(128)
     // this is not exactly contentSize.width (usually it is a bit smaller in order to accept an integer number of tiles)
     let contentWidth = CGFloat(3000)
@@ -32,22 +33,73 @@ class CollectionVC2: UIViewController {
     private var logicCanvas: LogicCanvas?
     private var lastUpdOffsetX = CGFloat(0)
 
+    ///
+    var timeModels = [TimeMarkModel]()
+
+    lazy var dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MMM dd'\n'YYYY"
+        return formatter
+    }()
+
+    private func timeString(_ value:Int64) -> String {
+        let timestamp = Date(timeIntervalSince1970:TimeInterval(value)/1000.0)
+        let dateString = dateFormatter.string(from:timestamp)
+        return dateString
+    }
+
+
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        collectionView.isHidden = true
+        if let layout = collectionView.collectionViewLayout as? ChartFlowLayout {
+            layout.registerDecorations()
+        }
 
         scrollController = ScrollController(collectionView:sliderCollectionView, delegate:self)
     }
 
-    override func viewDidLayoutSubviews() {
-        updateCanvasSize()
-        if let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
-            layout.itemSize = CGSize(width:tileWidth, height:tileHeight())
-        }
-    }
+//    override func viewDidLayoutSubviews() {
+//        updateCanvasSize()
+//    }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+
+        if let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
+            layout.itemSize = CGSize(width:tileWidth, height:tileHeight())
+        }
+        collectionView.isHidden = false
         showNextPlane()
+    }
+
+    @IBAction func actGetVisibleItems(_ sender: UIButton) {
+        let ip = IndexPath(item: 2000, section: 0)
+
+        let qqq = collectionView.visibleSupplementaryViews(ofKind: "UICollectionElementKindSectionHeader")
+        print("visible sv 1 \(qqq)")
+
+        let www = collectionView.indexPathsForVisibleSupplementaryElements(ofKind: DecorationKind.detailed.rawValue)
+        print("visible sv 2 \(www)")
+
+        let layout = collectionView.collectionViewLayout
+        let cx = UICollectionViewFlowLayoutInvalidationContext()
+        cx.invalidateDecorationElements(ofKind: DecorationKind.detailed.rawValue, at: [ip])
+        layout.invalidateLayout(with: cx)
+    }
+
+    var debugN = 0
+    var pos = CGFloat(100)
+    @IBAction func reloadItem0(_ sender: UIButton) {
+        guard let layout = collectionView.collectionViewLayout as? ChartFlowLayout else { return }
+        if var model = layout.getDecorationModel(at: 2000) {
+            model.values = [DecorationModel.Value(string:"dbg \(debugN)", color:UIColor.red)]
+            debugN += 1
+            model.x = pos
+            pos += 50
+            layout.setDecorationModel(model, at: 2003)
+        }
     }
 
     @IBAction func switchPlane(_ sender: UIButton) {
@@ -151,6 +203,7 @@ class CollectionVC2: UIViewController {
         scrollController.setPlane3d(p3d)
         infoTxt += "; count:\(logicCanvas!.count)"
         infoLabel.text = infoTxt
+        updateTimeItems()
         collectionView.reloadData()
     }
 
@@ -175,7 +228,7 @@ extension CollectionVC2: UICollectionViewDataSource {
             print("wrong cell class \(cell)")
             return cell
         }
-        tileCell.titleLabel?.text = "\(indexPath.section):\(indexPath.item)"
+        tileCell.titleLabel?.text = ""//\(indexPath.section):\(indexPath.item)"
 
         guard let canvas = logicCanvas else {
             // no data models, nothing to show
@@ -183,7 +236,14 @@ extension CollectionVC2: UICollectionViewDataSource {
         }
 
         tileCell.slice = canvas.getSlice(at:indexPath.item)
+        cell.backgroundColor = UIColor.clear
         return cell
+    }
+
+    //TODO: test it
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "kSimpleHeader", for: indexPath)
+        return header
     }
 }
 
@@ -191,6 +251,15 @@ extension CollectionVC2: UICollectionViewDataSource {
 extension CollectionVC2: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
     }
+
+    func collectionView(_ collectionView: UICollectionView,
+                        willDisplaySupplementaryView view: UICollectionReusableView,
+                        forElementKind elementKind: String,
+                        at indexPath: IndexPath) {
+        guard let layout = collectionView.collectionViewLayout as? ChartFlowLayout else { return }
+        layout.willDisplaySupplementaryView(view, elementKind:elementKind, at:indexPath)
+    }
+
 }
 
 extension CollectionVC2: UIScrollViewDelegate {
@@ -255,6 +324,67 @@ extension CollectionVC2: ScrollControllerDelegate {
                 }
             }
         }
+    }
+
+
+
+    struct TimeMarkModel {
+        var index:Int
+        var value:Int64
+        var x:CGFloat
+    }
+
+    ///////////
+    func updateTimeItems() {
+        guard let logicCanvas = self.logicCanvas else { return }
+        let timeItemWidth = CGFloat(100)
+        let currTileWidth = currentTileWidth()
+        if currTileWidth < 1 { return }
+        let zoomH = currTileWidth/tileWidth
+        let contentWidth0 = collectionView.contentSize.width/zoomH
+        let logicScaleH = contentWidth0/LogicCanvas.SIZE
+        let multyScaleH = zoomH * logicScaleH
+
+        let timeItemPeriodMin = CGFloat(120)
+        let timesCount = ceil((collectionView.contentSize.width - timeItemWidth)/timeItemPeriodMin)
+        let realPeriodX = (collectionView.contentSize.width - timeItemWidth)/timesCount
+        let w2 = timeItemWidth
+        //        for x in
+        let strd = stride(from:w2, to:(collectionView.contentSize.width - w2), by:realPeriodX)
+        let vTime = logicCanvas.getVectorTime()
+        let vtmCount = vTime.count
+        let ixScale = CGFloat(vtmCount)/LogicCanvas.SIZE
+        var array = [TimeMarkModel]()
+        var index = 0
+        for x in strd {
+            let logicX = x/multyScaleH
+            let ix = logicX*ixScale
+            let ixMin = Int(floor(ix))
+            let nextTimeVal = vTime.values[ixMin]
+
+            let model = TimeMarkModel(index:ixMin, value:nextTimeVal, x:x)
+            array.append(model)
+
+//            let ixMax = Int(ceil(ix))
+//            let val = vTime.fromNormal(Double(logicX))
+
+            index += 1
+        }
+        timeModels.removeAll()
+        timeModels.append(contentsOf: array)
+
+        reloadTimeModels()
+    }
+
+    private func reloadTimeModels() {
+        guard let layout = collectionView.collectionViewLayout as? ChartFlowLayout else { return }
+        var decorationModels = [DecorationModel]()
+        for tm in timeModels {
+            let decor = DecorationModel(x: tm.x, title:timeString(tm.value), color:UIColor.lightGray)
+            decorationModels.append(decor)
+        }
+
+        layout.setDecorationModels(decorationModels)
     }
 
     // currentTileWidth vs tileWidth = variable vs const

@@ -46,6 +46,7 @@ class ChartTileLayer: CALayer {
     }
 
     private func internalInit() {
+        // we can flip geometry either here or on sublayer, the result is almost equal*
         self.isGeometryFlipped = true
         self.masksToBounds = true
         for _ in 0..<maxLayerCount {
@@ -57,9 +58,10 @@ class ChartTileLayer: CALayer {
             layer.lineWidth = 1.0
             layer.lineJoin = .round
             layer.anchorPoint = CGPoint(x:0.0, y:0.0) //???
+            layer.isGeometryFlipped = false
             //TODO: remove debug
-            layer.borderColor = UIColor.yellow.cgColor
-            layer.borderWidth = 1.0
+//            layer.borderColor = UIColor.yellow.cgColor
+//            layer.borderWidth = 1.0
         }
     }
 

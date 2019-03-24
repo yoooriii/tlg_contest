@@ -52,6 +52,10 @@ class LogicCanvas {
         scaleAmplitude = updateAmplitudes()
     }
 
+    func getVectorTime() -> VectorTime {
+        return vTime
+    }
+
     private var cachedSlices = NSCache<NSString, Slice>()
 
     // get cached slice or create a new one and cache it
@@ -81,7 +85,7 @@ class LogicCanvas {
         let rangeX = MinMax(min: rect.minX * scale.x, max:rect.maxX * scale.x)
         guard let indiceRange = self.indiceRange(rangeX:rangeX) else { return nil }
         let indices = indiceRange.start...indiceRange.end
-        print("SLICE: [\(indices)] from: \(count)")
+//        print("SLICE: [\(indices)] from: \(count)")
 
         // start & end indices found, continue
         let viewMinY = rect.minY * scale.y
@@ -141,7 +145,7 @@ class LogicCanvas {
         let rangeX = MinMax(min:CGFloat(range.origin) * scale.x, max:CGFloat(range.end) * scale.x)
         guard let indiceRange = self.indiceRange(rangeX:rangeX) else { return nil }
         let indices = indiceRange.start...indiceRange.end
-        print("SLICE: [\(indices)] from: \(count)")
+//        print("SLICE: [\(indices)] from: \(count)")
 
         var minValue = Int64.max
         var maxValue = Int64.min
@@ -175,7 +179,7 @@ class LogicCanvas {
         let rangeX = MinMax(min:CGFloat(range.origin), max:CGFloat(range.end))
         guard let indiceRange = self.indiceRange(rangeX:rangeX) else { return nil }
         let indices = indiceRange.start...indiceRange.end
-        print("SLICE: [\(indices)] from: \(count)")
+//        print("SLICE: [\(indices)] from: \(count)")
 
         var minValue = Int64.max
         var maxValue = Int64.min

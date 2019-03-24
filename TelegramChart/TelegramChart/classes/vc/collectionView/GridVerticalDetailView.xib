@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionReusableView opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" userInteractionEnabled="NO" contentMode="center" reuseIdentifier="kGridVerticalDetailView" id="SSf-HT-IdD" customClass="GridVerticalDetailView" customModule="TelegramChart" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="80" height="241"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jbY-VY-fK7" userLabel="Vertical Line View">
+                    <rect key="frame" x="39.5" y="55" width="1" height="186"/>
+                    <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="1" id="VP6-y4-iLh"/>
+                    </constraints>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AYL-Zm-vtx" userLabel="Title View">
+                    <rect key="frame" x="0.0" y="10" width="80" height="40"/>
+                    <subviews>
+                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Info H" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="L0M-SJ-tGz">
+                            <rect key="frame" x="5" y="0.0" width="38.5" height="40"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                    <integer key="value" value="5"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="val 0" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RNR-FK-02P" userLabel="val-0">
+                            <rect key="frame" x="40" y="0.0" width="35" height="17"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="35" id="CU1-T4-j4i"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <color key="textColor" red="0.13041286269999999" green="1" blue="0.1354917484" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="val 1" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nkd-9z-eTn" userLabel="val-1">
+                            <rect key="frame" x="40" y="17" width="35" height="17"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="35" id="YI0-c9-DGt"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <color key="textColor" red="1" green="0.38151723780000002" blue="0.41902859930000003" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.29362896126760563" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="Nkd-9z-eTn" secondAttribute="trailing" constant="5" id="2iN-Y2-om1"/>
+                        <constraint firstItem="L0M-SJ-tGz" firstAttribute="leading" secondItem="AYL-Zm-vtx" secondAttribute="leading" constant="5" id="G4Q-nQ-QP9"/>
+                        <constraint firstItem="Nkd-9z-eTn" firstAttribute="top" secondItem="RNR-FK-02P" secondAttribute="bottom" id="Gvw-Lg-KC4"/>
+                        <constraint firstAttribute="bottom" secondItem="L0M-SJ-tGz" secondAttribute="bottom" id="JWC-EO-5t4"/>
+                        <constraint firstItem="L0M-SJ-tGz" firstAttribute="top" secondItem="AYL-Zm-vtx" secondAttribute="top" id="b4M-5v-6Eg"/>
+                        <constraint firstAttribute="height" constant="40" id="hIP-cm-fw1"/>
+                        <constraint firstAttribute="trailing" secondItem="RNR-FK-02P" secondAttribute="trailing" constant="5" id="tRb-TY-4oJ"/>
+                        <constraint firstItem="RNR-FK-02P" firstAttribute="top" secondItem="AYL-Zm-vtx" secondAttribute="top" id="tXN-aE-LIe"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="jbY-VY-fK7" firstAttribute="centerX" secondItem="SSf-HT-IdD" secondAttribute="centerX" id="5Vh-Q1-mJv"/>
+                <constraint firstAttribute="trailing" secondItem="AYL-Zm-vtx" secondAttribute="trailing" id="izD-Yu-Fz9"/>
+                <constraint firstItem="AYL-Zm-vtx" firstAttribute="top" secondItem="SSf-HT-IdD" secondAttribute="top" constant="10" id="k5L-q4-Kvh"/>
+                <constraint firstAttribute="bottom" secondItem="jbY-VY-fK7" secondAttribute="bottom" id="kU4-yn-F9G"/>
+                <constraint firstItem="jbY-VY-fK7" firstAttribute="top" secondItem="AYL-Zm-vtx" secondAttribute="top" constant="45" id="rMY-WF-ca2"/>
+                <constraint firstItem="AYL-Zm-vtx" firstAttribute="leading" secondItem="SSf-HT-IdD" secondAttribute="leading" id="yof-MK-5sJ"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="lPY-VD-aBn"/>
+            <connections>
+                <outlet property="verticalLine" destination="jbY-VY-fK7" id="KeX-Tx-fQG"/>
+                <outletCollection property="valueLabels" destination="L0M-SJ-tGz" collectionClass="NSMutableArray" id="thk-h5-2Gb"/>
+                <outletCollection property="valueLabels" destination="RNR-FK-02P" collectionClass="NSMutableArray" id="KmM-GH-jOw"/>
+                <outletCollection property="valueLabels" destination="Nkd-9z-eTn" collectionClass="NSMutableArray" id="hE9-pF-f60"/>
+            </connections>
+            <point key="canvasLocation" x="44.799999999999997" y="58.020989505247378"/>
+        </collectionReusableView>
+    </objects>
+</document>
