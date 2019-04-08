@@ -14,66 +14,88 @@ class GameViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
+        let scene = SCNScene()
+        // retrieve the SCNView
+        let scnView = self.view as! SCNView
+
+        // set the scene to the view
+        scnView.scene = scene
+
+        // allows the user to manipulate the camera
+        scnView.allowsCameraControl = true
+        scnView.delegate = self
+
+        // show statistics such as fps and timing information
+        scnView.showsStatistics = true
+
+        addIcosahedronTo(scene: scene)
+        scnView.backgroundColor = UIColor.lightGray
+    }
+
+    private func setupScene() {
         // create a new scene
         let scene = SCNScene(named: "art.scnassets/ship.scn")!
-        
+
         // create and add a camera to the scene
         let cameraNode = SCNNode()
         cameraNode.camera = SCNCamera()
         scene.rootNode.addChildNode(cameraNode)
-        
+
         // place the camera
         cameraNode.position = SCNVector3(x: 0, y: 0, z: 15)
-        
+
         // create and add a light to the scene
         let lightNode = SCNNode()
         lightNode.light = SCNLight()
         lightNode.light!.type = .omni
         lightNode.position = SCNVector3(x: 0, y: 10, z: 10)
         scene.rootNode.addChildNode(lightNode)
-        
+
         // create and add an ambient light to the scene
         let ambientLightNode = SCNNode()
         ambientLightNode.light = SCNLight()
         ambientLightNode.light!.type = .ambient
         ambientLightNode.light!.color = UIColor.darkGray
         scene.rootNode.addChildNode(ambientLightNode)
-        
+
         // retrieve the ship node
         let ship = scene.rootNode.childNode(withName: "ship", recursively: true)!
-        
+
         // animate the 3d object
         ship.runAction(SCNAction.repeatForever(SCNAction.rotateBy(x: 0, y: 2, z: 0, duration: 1)))
-        
+
         // retrieve the SCNView
         let scnView = self.view as! SCNView
-        
+
         // set the scene to the view
         scnView.scene = scene
-        
+
         // allows the user to manipulate the camera
         scnView.allowsCameraControl = true
         scnView.delegate = self
 
-        
+
         // show statistics such as fps and timing information
         scnView.showsStatistics = true
-        
+
         // configure the view
         scnView.backgroundColor = UIColor.magenta
-        
+
         // add a tap gesture recognizer
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
         scnView.addGestureRecognizer(tapGesture)
-        
+
         //==================
-        let icosahedron = generateIcosahedron()
-        let icosahedronNode = SCNNode(geometry: icosahedron)
-        icosahedronNode.position = SCNVector3(0, 1.5, 0)
-        scene.rootNode.addChildNode(icosahedronNode)
+        addIcosahedronTo(scene: scene)
+
+
+        let simpleMaterial = SCNMaterial()
+        simpleMaterial.diffuse.contents = UIColor.yellow
+        scene.background.contents = simpleMaterial
+
     }
-    
+
     @objc
     func handleTap(_ gestureRecognize: UIGestureRecognizer) {
         // retrieve the SCNView
@@ -126,7 +148,16 @@ class GameViewController: UIViewController {
         }
     }
 
-    func generateIcosahedron() -> SCNGeometry {
+    ////////////////////////////////////////////////////////////////
+
+    private func addIcosahedronTo(scene:SCNScene!) {
+        let icosahedron = generateIcosahedron()
+        let icosahedronNode = SCNNode(geometry: icosahedron)
+//        icosahedronNode.position = SCNVector3(0, 1.5, 0)
+        scene.rootNode.addChildNode(icosahedronNode)
+    }
+
+    private func generateIcosahedron() -> SCNGeometry {
         
         let t = (1.0 + sqrt(5.0)) / 2.0;
         
@@ -157,17 +188,33 @@ class GameViewController: UIViewController {
                                          primitiveType: .line,
                                          primitiveCount: indices.count/2,
                                          bytesPerIndex: MemoryLayout<Int32>.size)
+
+
+        let geometry = SCNGeometry(sources: [vertexSource], elements: [element])
+        geometry.firstMaterial?.diffuse.contents = UIColor.magenta
+
+
+//        let simpleMaterial = SCNMaterial()
+//        simpleMaterial.diffuse.contents = UIColor.red
+//        geometry.firstMaterial = simpleMaterial;
+
+        return geometry
+
         ////// Add colors
         var vertexColors = [SCNVector3]()
         
         for _ in 0..<vertices.count {
             
-            let red = Float(arc4random() % 255) / 255.0
-            let green = Float(arc4random() % 255) / 255.0
-            let blue = Float(arc4random() % 255) / 255.0
-            
-            vertexColors.append(SCNVector3(red, green, blue))
+//            let red = Float(arc4random() % 255) / 255.0
+//            let green = Float(arc4random() % 255) / 255.0
+//            let blue = Float(arc4random() % 255) / 255.0
+//
+//            vertexColors.append(SCNVector3(red, green, blue))
+
+            vertexColors.append(SCNVector3(1.0, 0.0, 0.0))
         }
+
+
         
         
         let dataColor = NSData(bytes: vertexColors, length: MemoryLayout<SCNVector3>.size * vertices.count) as Data
@@ -188,6 +235,8 @@ class GameViewController: UIViewController {
 
 extension GameViewController:SCNSceneRendererDelegate {
     func renderer(_ renderer: SCNSceneRenderer, willRenderScene scene: SCNScene, atTime time: TimeInterval) {
-        glLineWidth(10)
+//        glEnable(GL_COLOR_MATERIAL)
+//        glColor4f(1.0, 0.0, 0.0, 1.0)
+        glLineWidth(5)
     }
 }
