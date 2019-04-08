@@ -1,4 +1,5 @@
 .DS_Store
-/_tmp
+_tmp/
 UserInterfaceState.xcuserstate
 Breakpoints_v2.xcbkptlist
+/_winner
