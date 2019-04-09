@@ -15,6 +15,7 @@ import SpriteKit
 class TestSceneVC: UIViewController {
     @IBOutlet var skView:SKView!
     private var contentsCreated = false
+    var sinShape: SKShapeNode!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,8 +43,8 @@ class TestSceneVC: UIViewController {
         let shape = createTargetShape()
         scene.addChild(shape)
         
-        let shape2 = createShape2()
-        scene.addChild(shape2)
+        sinShape = createSinShape()
+        scene.addChild(sinShape)
     }
 
     func createShape() -> SKShapeNode {
@@ -85,12 +86,12 @@ class TestSceneVC: UIViewController {
         return node
     }
 
-    func createShape2() -> SKShapeNode {
+    func createSinShape() -> SKShapeNode {
         let path = CGMutablePath()
         let sideW = CGFloat(300)
-        let sideH = CGFloat(100)
+        let sideH = CGFloat(20)
         let bounds = CGRect(origin: CGPoint(x: -sideW/2.0, y: -sideH/2.0), size: CGSize(width: sideW, height: sideH))
-        let count = 30
+        let count = 100
         var x = bounds.minX
         let dx = bounds.width / CGFloat(count)
         let amplitude = bounds.height
@@ -126,9 +127,13 @@ class TestSceneVC: UIViewController {
         return sinShape
     }
 
+    private func denormalize(min:CGFloat, max:CGFloat, val:CGFloat) -> CGFloat {
+        return min + (max - min) * val
+    }
 
     @IBAction func changeValueAction(_ sender: UISlider) {
-
+        let val = denormalize(min: 0.3, max: 10, val: CGFloat(sender.value))
+        sinShape.yScale = val
     }
 }
 
