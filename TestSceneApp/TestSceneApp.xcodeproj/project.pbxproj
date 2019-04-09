@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B38B6909225CE50E00F68AB1 /* TestShape3dVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B38B6908225CE50E00F68AB1 /* TestShape3dVC.swift */; };
+		B38B690B225CE99800F68AB1 /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = B38B690A225CE99800F68AB1 /* Common.swift */; };
 		B3FAD0C1225B7AC7004FC153 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3FAD0C0225B7AC7004FC153 /* AppDelegate.swift */; };
 		B3FAD0C3225B7AC7004FC153 /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = B3FAD0C2225B7AC7004FC153 /* art.scnassets */; };
 		B3FAD0C5225B7AC7004FC153 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3FAD0C4225B7AC7004FC153 /* GameViewController.swift */; };
@@ -17,6 +19,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		B38B6908225CE50E00F68AB1 /* TestShape3dVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestShape3dVC.swift; sourceTree = "<group>"; };
+		B38B690A225CE99800F68AB1 /* Common.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Common.swift; sourceTree = "<group>"; };
 		B3FAD0BD225B7AC7004FC153 /* TestSceneApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestSceneApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B3FAD0C0225B7AC7004FC153 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B3FAD0C2225B7AC7004FC153 /* art.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = art.scnassets; sourceTree = "<group>"; };
@@ -76,6 +80,8 @@
 			isa = PBXGroup;
 			children = (
 				E23CB580225BE40700EE4A5C /* TestSceneVC.swift */,
+				B38B6908225CE50E00F68AB1 /* TestShape3dVC.swift */,
+				B38B690A225CE99800F68AB1 /* Common.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -155,6 +161,8 @@
 				B3FAD0C5225B7AC7004FC153 /* GameViewController.swift in Sources */,
 				B3FAD0C1225B7AC7004FC153 /* AppDelegate.swift in Sources */,
 				E23CB581225BE40700EE4A5C /* TestSceneVC.swift in Sources */,
+				B38B690B225CE99800F68AB1 /* Common.swift in Sources */,
+				B38B6909225CE50E00F68AB1 /* TestShape3dVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

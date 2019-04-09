@@ -79,45 +79,20 @@ class TestSceneVC: UIViewController {
         let dashedShader = SKShader(source: "void main() {" +
             "int stripe = int(u_path_length) / 50;" +
             "int h = int(v_path_distance) / stripe % 2;" +
-            "gl_FragColor = (0==h) ? float4(0, 0, 1, 1) : float4(0, 1, 0, 1);" +
+            "if (0==h) { gl_FragColor =  float4(0, 0, 1, 1); } " +
+            "else { gl_FragColor = vec4(SKDefaultShading().rgb, SKDefaultShading().a); }" +
             "}")
         node.strokeShader = dashedShader
 
         return node
     }
+    
 
     func createSinShape() -> SKShapeNode {
-        let path = CGMutablePath()
-        let sideW = CGFloat(300)
-        let sideH = CGFloat(20)
-        let bounds = CGRect(origin: CGPoint(x: -sideW/2.0, y: -sideH/2.0), size: CGSize(width: sideW, height: sideH))
-        let count = 100
-        var x = bounds.minX
-        let dx = bounds.width / CGFloat(count)
-        let amplitude = bounds.height
-        let k = CGFloat(0.3)
-        for i in 0...count {
-            let y = sin(x * k) * amplitude
-            let pt = CGPoint(x:x, y:y)
-            if i == 0 {
-                path.move(to: pt)
-            } else {
-                path.addLine(to: pt)
-            }
-
-            x += dx
-        }
-
-        x = bounds.minX
-        for _ in 0...count {
-            let y = sin(x * k) * amplitude
-            let pt = CGPoint(x:x, y:y)
-
-            let r = CGRect(origin: pt, size: CGSize.zero).insetBy(dx: -2, dy: -2)
-            path.addEllipse(in: r)
-
-            x += dx
-        }
+        let size = CGSize(width: 300, height: 20)
+        let bounds = CGRect(origin: CGPoint(x: -size.width/2.0, y: -size.height/2.0), size: size)
+        let path = Common.createSinPath(bounds: bounds, count: 100)
+        
         let sinShape = SKShapeNode(path: path)
         sinShape.lineWidth = 1.5
         sinShape.fillColor = .clear

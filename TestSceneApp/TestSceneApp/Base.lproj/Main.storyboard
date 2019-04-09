@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="aL7-tN-quj">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="h3S-le-HfO">
     <device id="retina4_0" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -13,7 +13,7 @@
         <!--Game View Controller-->
         <scene sceneID="tXr-a1-R10">
             <objects>
-                <viewController id="BV1-FR-VrT" customClass="GameViewController" customModule="TestSceneApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="test1" id="BV1-FR-VrT" customClass="GameViewController" customModule="TestSceneApp" customModuleProvider="target" sceneMemberID="viewController">
                     <sceneKitView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" preferredRenderingAPI="2" id="3se-qz-xqx">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -26,7 +26,7 @@
         <!--Test SceneVC-->
         <scene sceneID="49A-MY-0yU">
             <objects>
-                <viewController id="aL7-tN-quj" customClass="TestSceneVC" customModule="TestSceneApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="test2" id="aL7-tN-quj" customClass="TestSceneVC" customModule="TestSceneApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="jcW-4e-ZYl">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -61,6 +61,45 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Axe-e3-ymW" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="904" y="33"/>
+        </scene>
+        <!--Test Shape 3dVC-->
+        <scene sceneID="aHC-sD-bYJ">
+            <objects>
+                <viewController storyboardIdentifier="test3" id="h3S-le-HfO" customClass="TestShape3dVC" customModule="TestSceneApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="WBE-UZ-MSR">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="hFc-GB-Zuo">
+                                <rect key="frame" x="8" y="528" width="304" height="31"/>
+                                <connections>
+                                    <action selector="changeValueAction:" destination="h3S-le-HfO" eventType="valueChanged" id="8Ho-Dx-XER"/>
+                                </connections>
+                            </slider>
+                            <sceneKitView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Dyp-zz-FG5">
+                                <rect key="frame" x="10" y="60" width="300" height="418"/>
+                                <color key="backgroundColor" red="0.49764429259999998" green="0.64714275850000003" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </sceneKitView>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="0.70823534677123279" blue="0.31714602019999999" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="hFc-GB-Zuo" firstAttribute="leading" secondItem="MuN-zG-Swx" secondAttribute="leading" constant="10" id="8JN-h0-ALQ"/>
+                            <constraint firstItem="MuN-zG-Swx" firstAttribute="trailing" secondItem="hFc-GB-Zuo" secondAttribute="trailing" constant="10" id="C0Z-7m-T6l"/>
+                            <constraint firstItem="Dyp-zz-FG5" firstAttribute="leading" secondItem="MuN-zG-Swx" secondAttribute="leading" constant="10" id="Fv1-nc-wSa"/>
+                            <constraint firstItem="MuN-zG-Swx" firstAttribute="bottom" secondItem="hFc-GB-Zuo" secondAttribute="bottom" constant="10" id="MQ1-yG-tbJ"/>
+                            <constraint firstItem="MuN-zG-Swx" firstAttribute="trailing" secondItem="Dyp-zz-FG5" secondAttribute="trailing" constant="10" id="R19-4X-Bfy"/>
+                            <constraint firstItem="hFc-GB-Zuo" firstAttribute="top" secondItem="Dyp-zz-FG5" secondAttribute="bottom" constant="50" id="WpM-kJ-NjA"/>
+                            <constraint firstItem="Dyp-zz-FG5" firstAttribute="top" secondItem="MuN-zG-Swx" secondAttribute="top" constant="40" id="sIG-7u-Egz"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="MuN-zG-Swx"/>
+                    </view>
+                    <connections>
+                        <outlet property="scnView" destination="Dyp-zz-FG5" id="JTg-Lg-tN7"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="TMk-ck-Wiq" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1779" y="33"/>
         </scene>
     </scenes>
 </document>
