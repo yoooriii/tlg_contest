@@ -30,6 +30,7 @@
 		E23A94A0223EC8A600056A2C /* CollectionVC2.swift in Sources */ = {isa = PBXBuildFile; fileRef = E23A949F223EC8A600056A2C /* CollectionVC2.swift */; };
 		E23A94A22240B7CC00056A2C /* InitialVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E23A94A12240B7CC00056A2C /* InitialVC.swift */; };
 		E23A94A42240BC1800056A2C /* NSError+z42.swift in Sources */ = {isa = PBXBuildFile; fileRef = E23A94A32240BC1800056A2C /* NSError+z42.swift */; };
+		E23CB583225D27E200EE4A5C /* SceneVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E23CB582225D27E200EE4A5C /* SceneVC.swift */; };
 		E29F9A2E223986260039C1D7 /* ChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29F9A2D223986260039C1D7 /* ChartView.swift */; };
 		E29F9A30223DB0630039C1D7 /* ScrollController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29F9A2F223DB0630039C1D7 /* ScrollController.swift */; };
 		E2D2C97222384C2500BAAB97 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E2D2C97122384C2500BAAB97 /* Assets.xcassets */; };
@@ -69,6 +70,7 @@
 		E23A949F223EC8A600056A2C /* CollectionVC2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionVC2.swift; sourceTree = "<group>"; };
 		E23A94A12240B7CC00056A2C /* InitialVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialVC.swift; sourceTree = "<group>"; };
 		E23A94A32240BC1800056A2C /* NSError+z42.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSError+z42.swift"; sourceTree = "<group>"; };
+		E23CB582225D27E200EE4A5C /* SceneVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneVC.swift; sourceTree = "<group>"; };
 		E29F9A2D223986260039C1D7 /* ChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartView.swift; sourceTree = "<group>"; };
 		E29F9A2F223DB0630039C1D7 /* ScrollController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollController.swift; sourceTree = "<group>"; };
 		E2D2C96722384C2300BAAB97 /* TelegramChart.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TelegramChart.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -190,6 +192,7 @@
 				B3A8E7C522422F5F001A691D /* ChartPreviewCell.swift */,
 				B3A8E7C722422FC4001A691D /* ChartPreView.swift */,
 				B3A8E7C9224236D0001A691D /* ChartPreviewVC.swift */,
+				E23CB582225D27E200EE4A5C /* SceneVC.swift */,
 			);
 			path = vc;
 			sourceTree = "<group>";
@@ -317,6 +320,7 @@
 				E29F9A2E223986260039C1D7 /* ChartView.swift in Sources */,
 				B347D166223D5011006179D8 /* ZoomVC.swift in Sources */,
 				B347D162223D4033006179D8 /* TestModels.swift in Sources */,
+				E23CB583225D27E200EE4A5C /* SceneVC.swift in Sources */,
 				B34B9162223A702A001490C8 /* ChartShapeLayer.swift in Sources */,
 				E2DCA8A82247B58400D7C6BC /* DecorLayoutAttributes.swift in Sources */,
 				E2D2C9882238590300BAAB97 /* SliderBackgroundView.swift in Sources */,

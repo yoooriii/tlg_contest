@@ -45,11 +45,20 @@ class BasicVector: Vector {
     var values: [Int64]!
     var minValue: Int64
     var maxValue: Int64
-    let normal: Double!
-    let scale: Double!
+    var normal: Double!
+    var scale: Double!
 
     var count:Int {
         return values.count
+    }
+
+    init() {
+        id = nil
+        values = []
+        minValue = 0
+        maxValue = 0
+        normal = 1
+        scale = 1
     }
 
     required init(_ rawColumn:RawColumn, normal:Double) {
@@ -60,6 +69,18 @@ class BasicVector: Vector {
 
         self.normal = normal
         scale = Double(maxValue - minValue) / normal
+    }
+
+    func basicCopy(normal:Double) -> BasicVector {
+        if 0 == normal { print("zero normal") }
+        let cpy = BasicVector()
+        cpy.id = id
+        cpy.values = values
+        cpy.minValue = minValue
+        cpy.maxValue = maxValue
+        cpy.normal = normal
+        cpy.scale = Double(maxValue - minValue) / normal
+        return cpy
     }
 
 //    func toNormal(_ originalValue:Int64) -> Double {

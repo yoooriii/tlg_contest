@@ -107,7 +107,7 @@ extension InitialVC: UITableViewDelegate {
         }
 
         selectedIndex = indexPath.row
-        showPreview1()
+        showPreview3()
         print("tap: \(selectedIndex)")
     }
 
@@ -130,6 +130,15 @@ extension InitialVC: UITableViewDelegate {
     private func showPreview2() {
         guard let container = graphicsContainer else { return }
         if let vc = self.storyboard?.instantiateViewController(withIdentifier: "kChartPreviewVC") as? ChartPreviewVC {
+            vc.graphicsContainer = container
+            vc.selectedIndex = selectedIndex
+            navigationController?.pushViewController(vc, animated: true)
+        }
+    }
+
+    private func showPreview3() {
+        guard let container = graphicsContainer else { return }
+        if let vc = self.storyboard?.instantiateViewController(withIdentifier: "kScene") as? SceneVC {
             vc.graphicsContainer = container
             vc.selectedIndex = selectedIndex
             navigationController?.pushViewController(vc, animated: true)
