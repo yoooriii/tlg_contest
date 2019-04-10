@@ -12,10 +12,12 @@ import SceneKit
 class SceneVC: UIViewController {
     @IBOutlet var scnView: SCNView!
     @IBOutlet var infoLabel: UILabel!
+    @IBOutlet var slider1:UISlider!
+    @IBOutlet var slider2:UISlider!
 
     private var lineWidth = CGFloat(5.0)
-    private var testNode:SCNNode?
-    private var defaultScale = CGFloat(100)
+    private var testNode = [SCNNode]()
+    private var defaultScale = Float(100)
     private var contentsCreated = false
     private var scene: SCNScene!
 
@@ -40,20 +42,27 @@ class SceneVC: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         createConrents()
+        showNextPlane()
     }
 
 
-    private func denormalize(min:CGFloat, max:CGFloat, val:CGFloat) -> CGFloat {
+    private func denormalize(min:Float, max:Float, val:Float) -> Float {
         return min + (max - min) * val
     }
 
-    @IBAction func changeValueAction(_ sender: UISlider) {
-        let val = denormalize(min: 0.1, max: 6, val: CGFloat(sender.value))
-        print("val \(val)")
-        //        sinShape.yScale = val
-        if let testNode = testNode {
-            let v = Float(val * defaultScale)
-            testNode.scale = SCNVector3(v,Float(defaultScale),1)
+    @IBAction func actChangeVal1(_ sender: UISlider) {
+        let val2 = denormalize(min: 0.1, max: 6, val:slider2.value) * defaultScale
+        let val1 = denormalize(min: 0.1, max: 6, val:slider1.value) * defaultScale
+        for node in testNode {
+            node.scale = SCNVector3(val1, val2, 1)
+        }
+    }
+
+    @IBAction func actChangeVal2(_ sender: UISlider) {
+        let val2 = denormalize(min: 0.1, max: 6, val:slider2.value) * defaultScale
+        let val1 = denormalize(min: 0.1, max: 6, val:slider1.value) * defaultScale
+        for node in testNode {
+            node.scale = SCNVector3(val1, val2, 1)
         }
     }
 
@@ -89,39 +98,55 @@ class SceneVC: UIViewController {
             return
         }
 
-        var infoTxt = "#[\(index):\(container.planes.count)]: "
         let plane = container.planes[index]
+        let extrusionDepth = CGFloat(0.0)
 
-        if true {
-            let time = plane.vTime.basicCopy(normal: 1)
-            let amp = plane.vAmplitudes[0].basicCopy(normal: 1)
-            if time.count != amp.count {
+        for node in testNode {
+            node.removeFromParentNode()
+        }
+        testNode.removeAll()
+
+        var mass = [(Int,Float)]()
+        let ampCount = plane.vAmplitudes.count
+        for j in 0..<ampCount {
+            let color = plane.vAmplitudes[j].color
+            let count = plane.vTime.count
+            if count != plane.vAmplitudes[j].count {
                 print("wrong (amp,time) count")
                 return
             }
-            let count = time.count
-            let path = CGMutablePath()
-            path.move(to: CGPoint(x:-0.5, y:-0.55))
+            let path = UIBezierPath()
+            path.move(to: CGPoint(x:-0.5, y:-0.501))
             for i in 0..<count {
-                let x = (Double(time.values[i]) - Double(time.minValue)) / time.scale - 0.5
-                let y = (Double(amp.values[i]) - Double(amp.minValue)) / amp.scale - 0.5
+                let x = plane.vTime.normalValue1(at: i) - 0.5
+                let y = plane.vAmplitudes[j].normalValue1(at: i) - 0.5
                 path.addLine(to: CGPoint(x:x, y:y))
             }
-            path.addLine(to: CGPoint(x:0.5, y:-0.55))
-            path.closeSubpath()
+            path.addLine(to: CGPoint(x:0.5, y:-0.501))
+            path.close()
 
-            let bz = UIBezierPath(cgPath: path)
-            let shapeGeometry = SCNShape(path: bz, extrusionDepth: 0.1)
-            shapeGeometry.firstMaterial?.diffuse.contents = UIColor.blue
+            let shapeGeometry = SCNShape(path: path, extrusionDepth: extrusionDepth)
+            shapeGeometry.firstMaterial?.diffuse.contents = color ?? UIColor.black
             let shapeNode = SCNNode(geometry: shapeGeometry)
-            shapeNode.position = SCNVector3(0,0,0)
+            shapeNode.position = SCNVector3(0, 0, Float(j)*0.01) // not sure about Z
+            shapeNode.renderingOrder = j
             shapeNode.scale = SCNVector3(defaultScale, defaultScale, 1)
+            shapeNode.name = "amp #\(j)"
 
-            if let testNode = testNode {
-                testNode.removeFromParentNode()
-            }
-            testNode = shapeNode
+            testNode.append(shapeNode)
             scene.rootNode.addChildNode(shapeNode)
+            let avg = plane.vAmplitudes[j].avg()
+            mass.append((j, avg))
+        }
+
+        mass.sort { (lv, rv) -> Bool in
+            return lv.1 < rv.1
+        }
+        for i in 0..<testNode.count {
+            let m = mass[i]
+            let n = testNode[m.0]
+            n.position = SCNVector3(0, 0, Float(i)*0.01) // not sure about Z
+            n.renderingOrder = i
         }
     }
 

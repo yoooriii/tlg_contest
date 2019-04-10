@@ -450,17 +450,17 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <sceneKitView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="z9u-zD-Md4">
-                                <rect key="frame" x="10" y="70" width="355" height="497"/>
+                                <rect key="frame" x="10" y="25" width="355" height="492"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </sceneKitView>
                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="Asd-46-bdI">
-                                <rect key="frame" x="8" y="627" width="359" height="31"/>
+                                <rect key="frame" x="48" y="612" width="319" height="31"/>
                                 <connections>
-                                    <action selector="changeValueAction:" destination="AhC-JN-N1R" eventType="valueChanged" id="KTU-Te-Y2Q"/>
+                                    <action selector="actChangeVal1:" destination="AhC-JN-N1R" eventType="valueChanged" id="KTU-Te-Y2Q"/>
                                 </connections>
                             </slider>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pmc-E0-eQh">
-                                <rect key="frame" x="10" y="575" width="265" height="25"/>
+                                <rect key="frame" x="10" y="525" width="265" height="25"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="25" id="FZM-Lq-hAh"/>
                                 </constraints>
@@ -469,7 +469,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ulk-2r-rXi">
-                                <rect key="frame" x="285" y="567" width="80" height="44"/>
+                                <rect key="frame" x="285" y="517" width="80" height="44"/>
                                 <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="80" id="cig-jE-O7f"/>
@@ -480,27 +480,54 @@
                                     <action selector="showNextAction:" destination="AhC-JN-N1R" eventType="touchUpInside" id="SDs-t0-N36"/>
                                 </connections>
                             </button>
+                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="PpL-zp-1D9">
+                                <rect key="frame" x="48" y="572" width="319" height="31"/>
+                                <connections>
+                                    <action selector="actChangeVal2:" destination="AhC-JN-N1R" eventType="valueChanged" id="iD0-CO-4Qg"/>
+                                </connections>
+                            </slider>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rIU-Po-68R">
+                                <rect key="frame" x="5" y="576.5" width="10" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="06T-Xa-mBj">
+                                <rect key="frame" x="5" y="616.5" width="8" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="1" green="0.95283080909999995" blue="0.31714602019999999" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="pmc-E0-eQh" firstAttribute="leading" secondItem="QqQ-CC-yi3" secondAttribute="leading" constant="10" id="8GS-zH-AQf"/>
-                            <constraint firstItem="QqQ-CC-yi3" firstAttribute="bottom" secondItem="Asd-46-bdI" secondAttribute="bottom" constant="10" id="FcM-0U-esN"/>
+                            <constraint firstItem="Asd-46-bdI" firstAttribute="top" secondItem="PpL-zp-1D9" secondAttribute="bottom" constant="10" id="CGl-M1-zVL"/>
+                            <constraint firstItem="rIU-Po-68R" firstAttribute="centerY" secondItem="PpL-zp-1D9" secondAttribute="centerY" id="EbJ-hh-g5G"/>
+                            <constraint firstItem="QqQ-CC-yi3" firstAttribute="bottom" secondItem="Asd-46-bdI" secondAttribute="bottom" constant="25" id="FcM-0U-esN"/>
+                            <constraint firstItem="QqQ-CC-yi3" firstAttribute="trailing" secondItem="PpL-zp-1D9" secondAttribute="trailing" constant="10" id="G0e-dT-5LA"/>
                             <constraint firstItem="QqQ-CC-yi3" firstAttribute="trailing" secondItem="pmc-E0-eQh" secondAttribute="trailing" constant="100" id="Msc-kz-cVO"/>
                             <constraint firstItem="z9u-zD-Md4" firstAttribute="leading" secondItem="QqQ-CC-yi3" secondAttribute="leading" constant="10" id="NIg-Lb-vjE"/>
                             <constraint firstItem="Ulk-2r-rXi" firstAttribute="top" secondItem="z9u-zD-Md4" secondAttribute="bottom" id="O9B-j7-tEV"/>
+                            <constraint firstItem="06T-Xa-mBj" firstAttribute="centerY" secondItem="Asd-46-bdI" secondAttribute="centerY" id="OBo-JU-cVA"/>
+                            <constraint firstItem="06T-Xa-mBj" firstAttribute="leading" secondItem="QqQ-CC-yi3" secondAttribute="leading" constant="5" id="OO5-2K-iZK"/>
                             <constraint firstItem="QqQ-CC-yi3" firstAttribute="trailing" secondItem="Asd-46-bdI" secondAttribute="trailing" constant="10" id="UHL-bb-Ba2"/>
                             <constraint firstItem="QqQ-CC-yi3" firstAttribute="trailing" secondItem="Ulk-2r-rXi" secondAttribute="trailing" constant="10" id="c8k-sg-j61"/>
-                            <constraint firstItem="z9u-zD-Md4" firstAttribute="top" secondItem="QqQ-CC-yi3" secondAttribute="top" constant="50" id="cBI-1M-CVV"/>
+                            <constraint firstItem="z9u-zD-Md4" firstAttribute="top" secondItem="QqQ-CC-yi3" secondAttribute="top" constant="5" id="cBI-1M-CVV"/>
                             <constraint firstItem="pmc-E0-eQh" firstAttribute="top" secondItem="z9u-zD-Md4" secondAttribute="bottom" constant="8" id="gWN-2Z-K34"/>
+                            <constraint firstItem="PpL-zp-1D9" firstAttribute="leading" secondItem="QqQ-CC-yi3" secondAttribute="leading" constant="50" id="j2x-AM-usk"/>
                             <constraint firstItem="QqQ-CC-yi3" firstAttribute="trailing" secondItem="z9u-zD-Md4" secondAttribute="trailing" constant="10" id="kl0-BB-kaR"/>
-                            <constraint firstItem="QqQ-CC-yi3" firstAttribute="bottom" secondItem="z9u-zD-Md4" secondAttribute="bottom" constant="100" id="wKX-Tf-GgT"/>
-                            <constraint firstItem="Asd-46-bdI" firstAttribute="leading" secondItem="QqQ-CC-yi3" secondAttribute="leading" constant="10" id="zUm-Jw-FD0"/>
+                            <constraint firstItem="rIU-Po-68R" firstAttribute="leading" secondItem="QqQ-CC-yi3" secondAttribute="leading" constant="5" id="tej-4j-wf1"/>
+                            <constraint firstItem="QqQ-CC-yi3" firstAttribute="bottom" secondItem="z9u-zD-Md4" secondAttribute="bottom" constant="150" id="wKX-Tf-GgT"/>
+                            <constraint firstItem="Asd-46-bdI" firstAttribute="leading" secondItem="QqQ-CC-yi3" secondAttribute="leading" constant="50" id="zUm-Jw-FD0"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="QqQ-CC-yi3"/>
                     </view>
                     <connections>
                         <outlet property="infoLabel" destination="pmc-E0-eQh" id="Gj8-G7-Tns"/>
                         <outlet property="scnView" destination="z9u-zD-Md4" id="app-Vy-IRa"/>
+                        <outlet property="slider1" destination="Asd-46-bdI" id="8JP-1i-6gk"/>
+                        <outlet property="slider2" destination="PpL-zp-1D9" id="mP9-HY-4Q1"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8Du-E2-HD2" userLabel="First Responder" sceneMemberID="firstResponder"/>
